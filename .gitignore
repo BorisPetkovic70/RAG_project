@@ -1,0 +1,15 @@
+# Runtime state
+.cache/
+logs/
+
+# Secrets
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+
+# Third-party documents copied to build the style guides
+style_guides/sources/

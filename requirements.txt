@@ -1,0 +1,5 @@
+requests==2.34.2        # OpenRouter chat completions client
+html5lib==1.1           # section and document HTML validation
+PyYAML==6.0.3           # config, style guides, prompts
+python-dotenv==1.2.4    # loads OPENROUTER_API_KEY from .env
+pytest==9.2.0           # local tests

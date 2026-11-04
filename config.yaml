@@ -1,0 +1,63 @@
+seed: 42
+
+paths:
+  data_dir: data
+  guides_dir: style_guides
+  prompts_dir: prompts
+  cache_dir: .cache
+  log_dir: logs
+
+api:
+  base_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  timeout_s: 120
+
+models:
+  tool_ideation:
+    id: nvidia/nemotron-3.5-super-vl:free
+    reasoning: {enabled: true}
+  toc:
+    id: nvidia/nemotron-3.5-super-vl:free
+    reasoning: {enabled: true}
+  section:                                  # also used for repairs
+    id: google/gemma-4-31b-it:free
+    reasoning: {enabled: false}
+  judge:                                    # must differ from the section model
+    id: nvidia/nemotron-3.5-super-vl:free
+    reasoning: {enabled: true}
+
+temperature:
+  tool_ideation: 0.95
+  toc_range: [0.7, 0.9]                     # sampled per document
+  section_range: [0.5, 0.7]                 # sampled per document
+  judge: 0.2
+
+generation:
+  num_tools: 5
+  docs_per_tool: 4
+  doc_types:
+    - privacy_policy
+    - terms_of_service
+    - data_processing_agreement
+    - service_level_agreement
+    - security_whitepaper
+    - compliance_and_certifications
+  issue_types:
+    - contradiction
+    - ambiguity
+    - typo_formatting
+    - inconsistent_terminology
+  issues_per_doc: [2, 3]
+
+toc:
+  max_depth: 4
+  leaf_range: [12, 25]
+
+validation:
+  section_word_tolerance: 0.2
+
+retry:
+  max_attempts: 3
+  repair_rounds: 2
+  backoff_base_s: 2
+  max_total_wait_s: 600
