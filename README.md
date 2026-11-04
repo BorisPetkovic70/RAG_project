@@ -29,7 +29,7 @@ The project is built incrementally in five phases.
 ## Phase 1 overview
 
 - **Pipeline:** tool ideation → TOC generation (reasoning model, strict JSON schema) → section-by-section HTML generation (cost-effective model) → assembly → judge and repair → validation.
-- **Models:** accessed through OpenRouter. The API key is read from the `OPENROUTER_API_KEY` environment variable.
+- **Models:** DeepSeek V4.1 Flash (tool ideation, TOC, judge) and Gemma 4 31B (sections), both paid, accessed through OpenRouter. The API key is read from the `OPENROUTER_API_KEY` environment variable. Token usage and cost are recorded per document in `meta_*.json`.
 - **Configuration:** everything (models, temperatures, number of tools, document types, retry limits) lives in `config.yaml`. Prompts live in `prompts/*.yaml`, never inline in code.
 - **Output:**
 

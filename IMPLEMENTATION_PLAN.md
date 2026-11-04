@@ -10,6 +10,10 @@ Already on `main`: `phase1_design.md`, `rag_htec_project_specification.md`, `REA
 Bootstrap commits go **directly to `main`** (scaffolding only, no PR). Every feature after
 this goes through a PR. All commits are made by you.
 
+**Status:** done. B1–B6 were committed as `201ebf8` and `a1b0c16`. The switch to paid
+models (design D1–D3, D30–D32, D39–D41) was committed to `main` afterwards. Design, docs and
+config changes stay on `main` until feature code starts (CLAUDE.md, Git).
+
 ### Commit B1: ignore rules first
 Files: `.gitignore`, `.env.example`
 ```
@@ -49,8 +53,9 @@ Files:
   `{id, reasoning}` because `call_llm` reads `model_cfg.reasoning`. `generation.doc_types`
   lists the six slugs `privacy_policy, terms_of_service, data_processing_agreement,
   service_level_agreement, security_whitepaper, compliance_and_certifications` (see Q3).
-  Model IDs: `nvidia/nemotron-3.5-super-vl:free` (ideation, TOC, judge; reasoning on) and
-  `google/gemma-4-31b-it:free` (sections; reasoning off). See Q1 about the section model.
+  Model IDs were first committed as the `:free` variants; they are now the paid models from
+  design §6 (`deepseek/deepseek-v4.1-flash-1017`, `google/gemma-4-31b-it`), each with a
+  provider list.
 - `phase1/__init__.py` (empty package)
 - `prompts/.gitkeep`, `data/.gitkeep`, `tests/.gitkeep`
 - `.cache/` and `logs/` get no `.gitkeep`. They are ignored and created at runtime.
@@ -171,13 +176,13 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 ### F5 `feat/outputs`
 - **From:** `main` after F4 · **Depends on:** F3, F4
 - **Goal:** write the document outputs, detect completed documents, and write the run summary.
-- **Functions:** `write_outputs(cfg, tool_id, doc_type, html, nodes, sections, assignment, verdict, temps, seeds, repair_rounds)`, `document_complete(cfg, tool_id, doc_type) -> bool`, `write_run_summary(log_dir, summary)`
+- **Functions:** `write_outputs(cfg, tool_id, doc_type, html, nodes, sections, assignment, verdict, temps, seeds, repair_rounds, usage)`, `document_complete(cfg, tool_id, doc_type) -> bool`, `write_run_summary(log_dir, summary)`
 - **Files:** `phase1/outputs.py`, `phase1/datatypes.py` (`Verdict`), `tests/test_outputs.py`
 - **Steps:**
-  1. `write_outputs` (HTML first, meta last, planted `verified`/`not_verified`, `unintended` list) → `feat(outputs): Write document HTML and metadata`
+  1. `write_outputs` (HTML first, meta last, planted `verified`/`not_verified`, `unintended` list, `usage` totals) → `feat(outputs): Write document HTML and metadata`
   2. `document_complete` → `feat(outputs): Detect completed documents`
-  3. `RunSummary` + `write_run_summary` → `feat(outputs): Write run summary`
-- **Local test:** `tmp_path` data dir with a fixture verdict. Meta has every §4 field. A document counts as complete only when all three files exist. The summary flags a doc with a `not_verified` or unintended issue.
+  3. `RunSummary` (incl. `usage`) + `write_run_summary` → `feat(outputs): Write run summary`
+- **Local test:** `tmp_path` data dir with a fixture verdict and fixture usage totals (no dependency on F7: `write_outputs` writes the totals it is given). Meta has every §4 field. A document counts as complete only when all three files exist. The summary flags a doc with a `not_verified` or unintended issue and shows usage per model.
 - **Real API:** none.
 - **Done:** files match §5 layout; no issue info appears in the HTML or TOC.
 
@@ -195,27 +200,28 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 
 ### F7 `feat/llm-client`
 - **From:** `main` after F1 · **Depends on:** F1
-- **Goal:** one OpenRouter call with strict `json_schema`, 429 handling, and the attempt wrapper.
-- **Functions:** `call_llm(model_cfg, messages, schema, temperature, seed) -> dict`, `with_attempts(label, produce, validate, max_attempts=cfg.retry.max_attempts) -> result`; exceptions `BudgetExhausted`, `CallError`, `GenerationFailed`
-- **Files:** `phase1/llm.py`, `tests/test_llm.py`
+- **Goal:** one OpenRouter call with strict `json_schema`, fixed provider routing, usage reporting, 429/402 handling, the attempt wrapper, and the usage ledger.
+- **Functions:** `call_llm(model_cfg, messages, schema, temperature, seed) -> (dict, Usage)`, `with_attempts(label, produce, validate, ledger, max_attempts=cfg.retry.max_attempts) -> result`, `append_usage(ledger, label, attempt, ok, usage)`, `read_usage(path) -> list[UsageEntry]`, `sum_usage(entries) -> UsageTotals`, `run_usage(cache_dir, run_id) -> UsageTotals`; exceptions `BudgetExhausted`, `CallError` (carries `usage` when the call was billed), `GenerationFailed`
+- **Files:** `phase1/llm.py`, `phase1/datatypes.py` (`Usage`, `Ledger`), `tests/test_llm.py`
 - **Steps:**
-  1. Exceptions + `with_attempts` → `feat(llm): Add attempt wrapper and errors`
-  2. `call_llm` success path (payload, strict schema, reasoning, seed, JSON parse → `CallError`) → `feat(llm): Call OpenRouter with strict JSON schema`
-  3. 429 handling (Retry-After, backoff, `max_total_wait_s`, daily limit → `BudgetExhausted`) → `feat(llm): Handle rate limits and daily cap`
-- **Local test:** monkeypatch `requests.post` and `time.sleep` with fake responses: 200, invalid JSON, 500, 429 with Retry-After, 429 without it, a daily-limit body, and a wait-cap overflow. 429s must not count as attempts, and `BudgetExhausted` must pass through `with_attempts`.
-- **Real API:** one manual probe per model with a tiny schema (not committed). It confirms Q1 (IDs, strict schema, seed), Q2 (temperature with reasoning) and, if it can be triggered, Q5 (daily-limit body). You record the findings in `phase1_design.md` §9/Changelog.
-- **Done:** fake-response tests green; a real call to each configured model returns schema-valid JSON.
+  1. `Usage`/`Ledger` + `append_usage`, `read_usage`, `sum_usage`, `run_usage` → `feat(llm): Add usage ledger`
+  2. Exceptions + `with_attempts` (ledger entry for every attempt) → `feat(llm): Add attempt wrapper and errors`
+  3. `call_llm` success path (payload with strict schema, reasoning, seed, `provider` block, usage; JSON parse → `CallError(usage)`) → `feat(llm): Call OpenRouter with strict JSON schema`
+  4. 429 handling (Retry-After, backoff, `max_total_wait_s` → `BudgetExhausted`) and 402 → `BudgetExhausted` → `feat(llm): Handle rate limits and out of credit`
+- **Local test:** monkeypatch `requests.post` and `time.sleep` with fake responses: 200 with usage, invalid JSON (usage still recorded), 500, 402, 429 with Retry-After, 429 without it, a wait-cap overflow, and "no endpoints available". The payload must contain `provider.order`, `allow_fallbacks: false` and `require_parameters: true`. 429s must not count as attempts, `BudgetExhausted` must pass through `with_attempts`, and every attempt (failed ones too) must land in the ledger with the right `run_id`. `sum_usage`/`run_usage` totals are checked on fixture ledgers.
+- **Real API:** one manual probe per model with a tiny schema (not committed). It confirms strict schema and seed on the listed providers (§9.1), whether DeepSeek honors `temperature` with reasoning on (§9.2: same prompt at 0.2 and 1.0), and the usage fields (`usage.cost`, reasoning tokens, `provider`; §9.7). You record the findings in `phase1_design.md` §9/Changelog.
+- **Done:** fake-response tests green; a real call to each configured model returns schema-valid JSON and a ledger entry with tokens, cost and provider.
 
 ### F8 `feat/tool-ideation`
 - **From:** `main` after F7 · **Depends on:** F1, F7
 - **Goal:** generate all fictional tools in one call and persist `tool.json`.
-- **Functions:** `load_or_generate_tools(cfg, prompts) -> dict[str, Tool]`, `generate_tools(cfg, prompts) -> list[Tool]`, `validate_tools(tools, num_tools) -> list[str]`
+- **Functions:** `load_or_generate_tools(cfg, prompts, run_id) -> dict[str, Tool]`, `generate_tools(cfg, prompts) -> (list[Tool], Usage)`, `validate_tools(tools, num_tools) -> list[str]`
 - **Files:** `phase1/ideation.py`, `prompts/tool_ideation.yaml` (remove `prompts/.gitkeep`), `tests/test_ideation.py`
 - **Steps:**
   1. `validate_tools` → `feat(ideation): Validate generated tools`
   2. Prompt YAML + `generate_tools` → `feat(ideation): Generate fictional tools in one call`
   3. `load_or_generate_tools` (reuse/write `tool.json`) → `feat(ideation): Reuse or generate tool descriptions`
-- **Local test:** `fake_llm` returns fixture tools. Check the count, case-insensitive duplicate names and empty fields. A second run reuses existing `tool.json` files without calling the LLM. The prompt loads through `load_prompts`.
+- **Local test:** `fake_llm` returns fixture tools and a fake `Usage`. Check the count, case-insensitive duplicate names and empty fields. The attempt is written to `.cache/tool_ideation/usage.jsonl`. A second run reuses existing `tool.json` files without calling the LLM. The prompt loads through `load_prompts`.
 - **Real API:** one call (5 tools). Check they are fictional and from clearly different categories. The resulting `data/tool*/tool.json` stays uncommitted until the dataset commit (Q15).
 - **Done:** a real run writes 5 valid `tool.json` files; a rerun makes no call.
 
@@ -271,15 +277,15 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 ### F13 `feat/pipeline`
 - **From:** `main` after F12 · **Depends on:** all
 - **Goal:** `python generate.py config.yaml` runs the full §3 flow with resume and clean stops.
-- **Functions:** `main(config_path)`, `generate_document(cfg, prompts, tool_id, tool, doc_type, guide) -> DocFlags`
+- **Functions:** `main(config_path)`, `generate_document(cfg, prompts, tool_id, tool, doc_type, guide, run_id) -> DocFlags`
 - **Files:** `generate.py`, `tests/test_pipeline.py`, `README.md`, `CLAUDE.md` (Commands)
 - **Steps:**
   1. `generate_document` TOC → sections → assembly (no judge yet) → `feat(pipeline): Generate one document end to end`
   2. Judge/repair loop → `feat(pipeline): Add judge and repair loop`
-  3. `main`: dotenv, tools, selection, resume skip, `BudgetExhausted`/`GenerationFailed` stop, run summary, logging to `logs/run_{timestamp}.log` → `feat(pipeline): Run all documents with resume`
+  3. `main`: dotenv, `run_id`, tools, selection, resume skip, `BudgetExhausted`/`GenerationFailed` stop, run summary with `run_usage`, logging to `logs/run_{timestamp}.log` → `feat(pipeline): Run all documents with resume`
   4. Run commands in README/CLAUDE.md → `docs: Add generate and validate commands`
-- **Local test:** a scripted `fake_llm` that answers by schema, with a small `tmp_path` config (1 tool, 1 doc, `leaf_range` [4, 6], `issues_per_doc` [2, 2]). A full fake run writes outputs that pass `validate.py`. Raise `BudgetExhausted` mid-document, rerun, and check that cached sections and the repair round are reused and meta is written last. A `GenerationFailed` run exits 1 with a summary.
-- **Real API:** one full document with a small scratch config (~15–40 calls), then the full run (~280–550 calls, over several days via resume; Q9).
+- **Local test:** a scripted `fake_llm` that answers by schema, with a small `tmp_path` config (1 tool, 1 doc, `leaf_range` [4, 6], `issues_per_doc` [2, 2]). A full fake run writes outputs that pass `validate.py`. Raise `BudgetExhausted` mid-document, rerun, and check that cached sections and the repair round are reused, meta is written last, and meta usage covers both runs. A `GenerationFailed` run exits 1 with a summary.
+- **Real API:** one full document with a small scratch config (~15–40 calls, a few cents), then the full run (~280–550 calls, estimated $1–1.5; resume only covers interruptions).
 - **Done:** the real full run completes; `python validate.py data/` passes all 20 docs; the run summary lists flagged docs.
 
 ## 3. Order and dependency graph
@@ -303,8 +309,7 @@ bootstrap
                       └─ F13 pipeline (all)
 ```
 F2, F3 and F7 only need F1. They can run in parallel (for example with your co-author) and
-still merge in the listed order. Q1 can be answered before F7 by checking the OpenRouter
-model pages, so the config IDs are right from bootstrap.
+still merge in the listed order.
 
 ## 4. First feature: detailed start (F1 `feat/config-loading`)
 
@@ -386,7 +391,7 @@ git checkout main && git pull && git branch -d feat/config-loading
 | Sections by cost-effective model, one by one | F10, F13 |
 | Each section gets tool + all sections so far | F10 |
 | At least two models | bootstrap config, F1 |
-| Price/performance-based model choice | bootstrap config (D1/D2), F7 probe (Q1) |
+| Price/performance-based model choice | config (D1, D2, D30, D40), F7 (usage ledger), F5 (usage in meta and summary) |
 | Temperature used and configurable, variety | F1, F7, F13 (per-doc sampling) |
 | 2–3 intentional issues per document | F2 |
 | Issues actually present | F4, F11, F12, F13 |
@@ -397,26 +402,26 @@ git checkout main && git pull && git branch -d feat/config-loading
 | Detailed prompts | F8–F12 |
 | No hard-coded fallbacks | F7, F13 |
 | Configurable for all parameters | bootstrap config, F1 |
-| Reproducible outputs | F2, F7 (`seed`), F5 (meta) |
+| Reproducible outputs | F2, F7 (`seed`, pinned snapshot, provider order), F5 (meta) |
 | Basic HTML + JSON integrity validation | F6 |
 
-Every requirement is covered. One is partly open: price/performance depends on Q1.
+Every requirement is covered.
 
 ## 6. Questions
 
 **Blocking**
-1. **Model IDs (§9.1).** *Partly resolved.* IDs are `nvidia/nemotron-3.5-super-vl:free` and `google/gemma-4-31b-it:free`. Per OpenRouter's model list (2026-11-04), Nemotron `:free` supports `structured_outputs`, `seed`, `temperature` and `reasoning`. Gemma `:free` lists `response_format` but **not** `structured_outputs`; only the paid `google/gemma-4-31b-it` does. Decision: keep `:free` for bootstrap and F1–F6, then switch `models.section` to the paid version and update D2/D30 **before F7 starts** (also noted in CLAUDE.md).
+1. **Model IDs (§9.1).** *Resolved:* paid `deepseek/deepseek-v4.1-flash-1017` (ideation, TOC, judge) and `google/gemma-4-31b-it` (sections), each with a provider order (design D1–D3, D30, D39). The free Gemma endpoint has no strict structured outputs. The F7 probe confirms strict schema and seed in practice.
 2. **Config inside `call_llm` / `with_attempts`.** The §4 signatures take no `cfg`, but they use `api.base_url`, `api.timeout_s`, `api.api_key_env`, `retry.backoff_base_s`, `retry.max_total_wait_s` and `retry.max_attempts`. How should these reach them? Blocks F7.
 3. **Compliance slug.** §5 lists `compliance_certifications.yaml`, but the guide in the repo is `compliance_and_certifications.yaml` (same `document_type`). The plan uses `compliance_and_certifications`; you'd update the §5 text. OK?
 4. **Shared prompt text.** Where do the `issue_instruction` text per issue type, the HTML contract text and `issue_type_definitions` live? §4 says each prompt file is `{system, user}`. Blocks F10–F12, not the order.
 5. **`validate.py` limits.** `validate_data_dir(data_dir)` checks `depth <= max_depth`, but it gets no config. Should it read `config.yaml`? Blocks F6.
-6. **Daily-limit error format (§9.5).** Blocks the `BudgetExhausted` branch in F7 step 3, unless the probe or OpenRouter docs show it.
+6. **Daily-limit error format (§9.5).** *Resolved:* not needed. Paid models have no daily cap; out of credits is HTTP 402 → `BudgetExhausted` (D32).
 7. **Placeholder syntax.** The prompts contain JSON examples, so `str.format` needs doubled braces. The alternatives are `string.Template` (`$name`, stdlib) or Jinja2 (a new dependency). Blocks F1 step 4.
 
 **Non-blocking (affect content, not order)**
-8. **Temperature with reasoning (§9.2).** If the F7 probe shows Nemotron ignores `temperature` with reasoning on, do you want to revisit D6?
+8. **Temperature with reasoning (§9.2).** If the F7 probe shows DeepSeek ignores `temperature` with reasoning on, do you want to revisit D6?
 9. **Defaults (§9.3).** The bootstrap uses the §6 values as written unless you change them.
-10. **Daily cap (§9.4).** The full run (~280–550 calls) will span several days via resume. Check your account's free-tier daily limit before F13.
+10. **Daily cap (§9.4).** *Resolved:* paid models have no daily request cap (D30).
 11. **Commit `style_guides/sources/`?** *Resolved:* no, it's ignored in B1.
 12. **Unused guide fields.** `certification_profile` and `certification_catalog` (compliance guide) and `sources` (all guides) aren't rendered by `generate_toc` per §4, so they're ignored. Intended?
 13. **Python version.** *Resolved:* keep 3.11+. Install Python 3.11 before creating the venv (the machine has 3.10.12).

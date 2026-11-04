@@ -11,20 +11,26 @@ api:
   base_url: https://openrouter.ai/api/v1
   api_key_env: OPENROUTER_API_KEY
   timeout_s: 120
+  require_parameters: true                  # only providers that support every request parameter
+  allow_fallbacks: false                    # never leave the providers list
 
 models:
   tool_ideation:
-    id: nvidia/nemotron-3.5-super-vl:free
-    reasoning: {enabled: true}
+    id: deepseek/deepseek-v4.1-flash-1017
+    reasoning: {effort: high}
+    providers: [deepinfra/fp8, inference-net/fp8, nebius/fp8]
   toc:
-    id: nvidia/nemotron-3.5-super-vl:free
-    reasoning: {enabled: true}
+    id: deepseek/deepseek-v4.1-flash-1017
+    reasoning: {effort: high}
+    providers: [deepinfra/fp8, inference-net/fp8, nebius/fp8]
   section:                                  # also used for repairs
-    id: google/gemma-4-31b-it:free
+    id: google/gemma-4-31b-it
     reasoning: {enabled: false}
+    providers: [crusoe/bf16, parasail/fp8, deepinfra/fp8]
   judge:                                    # must differ from the section model
-    id: nvidia/nemotron-3.5-super-vl:free
-    reasoning: {enabled: true}
+    id: deepseek/deepseek-v4.1-flash-1017
+    reasoning: {effort: high}
+    providers: [deepinfra/fp8, inference-net/fp8, nebius/fp8]
 
 temperature:
   tool_ideation: 0.95

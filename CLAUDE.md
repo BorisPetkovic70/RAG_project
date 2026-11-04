@@ -14,14 +14,10 @@ A 5-phase RAG system that helps software whitelisting teams check AI tools' lega
 
 Current state: Phase 1 is designed (`phase1_design.md`) and planned (`IMPLEMENTATION_PLAN.md`). The bootstrap (layout, config, requirements, style guides) exists; no feature code yet. Next is F1 `feat/config-loading`.
 
-## Open issue: section model and strict structured outputs
-
-OpenRouter lists `google/gemma-4-31b-it:free` (`models.section`) without `structured_outputs`, so it may not enforce strict `json_schema`, which the spec requires and design D2 assumed. Only the paid `google/gemma-4-31b-it` lists it (checked 2026-11-04 via `https://openrouter.ai/api/v1/models`). `nvidia/nemotron-3.5-super-vl:free` does list it. Decision: keep the `:free` ID during bootstrap and the features with no API calls. **Before the first API-calling feature (F7 `feat/llm-client`) starts**, switch `models.section` to the paid version and adapt the code and plan. This changes D2/D30, so update `phase1_design.md` (Decisions + Changelog).
-
 ## Key documents
 
 - `rag_htec_project_specification.md`: the assignment (source of truth for requirements)
-- `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D38), open questions
+- `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D41), open questions
 - `IMPLEMENTATION_PLAN.md`: bootstrap commits, feature branches F1–F13 with steps and done criteria, open questions
 - `Yaml_file_generator_prompt.md`: prompt for building `style_guides/*.yaml` from real public documents
 - `YAML_generator_compliance_and_certifications.md`: variant of that prompt for Compliance & Certifications
@@ -32,7 +28,7 @@ When a design decision changes, update `phase1_design.md` (Decisions table and C
 
 - Python 3.11+
 - LLM access through OpenRouter's OpenAI-compatible chat completions API (`https://openrouter.ai/api/v1`); key in `OPENROUTER_API_KEY`
-- Phase 1 models: `nvidia/nemotron-3.5-super-vl:free` (reasoning: ideation, TOC, judge) and `google/gemma-4-31b-it:free` (cost-effective: sections; see the open issue above)
+- Phase 1 models (paid, through OpenRouter): `deepseek/deepseek-v4.1-flash-1017` (reasoning effort high: ideation, TOC, judge) and `google/gemma-4-31b-it` (reasoning off: sections, repairs). Requests use a fixed provider order with `require_parameters`; token usage and cost are recorded per document (design D1–D3, D30, D39–D41)
 - `requests` (OpenRouter client), `html5lib` (HTML validation), `PyYAML`, `python-dotenv`, `pytest`; pinned in `requirements.txt`
 
 ## Rules from the specification
@@ -97,6 +93,9 @@ Add the run and validate commands here once `generate.py` and `validate.py` are 
   `git checkout main && git pull && git checkout -b <branch>`.
   If the feature depends on an unmerged branch, branch from that one instead. Wait for the user
   to create the branch before editing files.
+- Exception while the project is still in the design and planning phase: design, docs and config
+  changes with no feature code are made directly on `main`. Feature code always gets its own
+  branch and PR.
 - When a commit is due, give the exact files to `git add` and a runnable command:
   `git commit -m "type(scope): Subject" -m "Body"`.
 - Message format: Conventional Commits (`feat|fix|docs|style|refactor|test|chore|exp`, where
