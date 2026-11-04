@@ -1,6 +1,7 @@
 # Runtime state
 .cache/
 logs/
+smoke/
 
 # Secrets
 .env

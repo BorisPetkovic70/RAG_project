@@ -59,11 +59,12 @@ The spec says submissions must not look entirely copilot-generated and must refl
 
 ```
 config.yaml
+config.smoke.yaml # smoke run: 2 tools × 2 documents, outputs under smoke/ (not committed)
 requirements.txt
 generate.py       # entry point: python generate.py config.yaml
 validate.py       # standalone validator: python validate.py data/
 phase1/           # one module per design §4 group (config, llm, ideation, planning, toc, ...)
-tests/            # pytest tests and fixtures, no API calls
+tests/            # pytest tests and fixtures (incl. recorded probe responses), no API calls
 prompts/          # tool_ideation, toc, section, repair, judge (.yaml)
 style_guides/     # one YAML per document type (sources/ is not committed)
 data/toolN/       # tool.json, toc_*.json, *.html, meta_*.json
@@ -82,7 +83,7 @@ cp .env.example .env              # set OPENROUTER_API_KEY
 python -m pytest                  # tests, no API calls
 ```
 
-Add the run and validate commands here once `generate.py` and `validate.py` are implemented.
+Testing has four levels (unit tests, model probe, smoke run, full run); see `phase1_design.md` §10. Never test on free models (D42). Add the run, smoke-run and validate commands here once `generate.py` and `validate.py` are implemented.
 
 ## Git
 

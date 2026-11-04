@@ -386,6 +386,9 @@ print per-file PASS/FAIL with reasons
 
 ```
 config.yaml
+config.smoke.yaml                   # smoke run: 2 tools × 2 documents (§10)
+smoke/                              # smoke run outputs: data/, .cache/, logs/ (not committed)
+tests/fixtures/responses/           # recorded probe responses (D44)
 style_guides/
   privacy_policy.yaml, terms_of_service.yaml, data_processing_agreement.yaml,
   service_level_agreement.yaml, security_whitepaper.yaml, compliance_certifications.yaml
@@ -556,6 +559,9 @@ typical_length:
 | D39 | Provider routing: `require_parameters` + an ordered provider list per model (fp8/bf16 only, full context), no fallbacks outside the list | Free routing; single provider | Guarantees strict JSON, `seed` and `temperature` are honored; fewer quantization differences between runs; backups in the list survive one provider's outage. |
 | D40 | DeepSeek reasoning effort `high` for ideation, TOC and judge | `max`; `medium` | Index 29 vs 33 at `max` for about 25% less cost and time per task ($0.46 vs $0.60; 10.4 vs 13.7 min). |
 | D41 | Usage and cost recorded per LLM attempt in a per-document ledger (`usage.jsonl`), failed attempts included; summed into `meta_*.json` and the run summary | Don't record; run totals only; in-memory sums | Evidence for the price/performance choice; resume-safe, since a document can span runs; matches what OpenRouter bills, retries included. |
+| D42 | Testing in four levels (§10): pytest with a fake LLM, one probe per model, a paid smoke run, the full run; no runs on free models | Try the pipeline on free models first; real calls only | Fakes test the code for free and can force rare cases (402, three failed attempts, a stop mid-document) that a real model can't produce on demand. Free Gemma has no strict JSON, so a free run couldn't run the section step as designed and would test different models than the real run. A paid smoke run costs cents. |
+| D43 | Committed `config.smoke.yaml`: 2 tools × 2 documents, outputs under `smoke/` | Temporary local copy; CLI overrides | Reviewers can reproduce it; no CLI overrides needed (D37); smoke output never mixes with the real dataset or its `tool.json` files. |
+| D44 | Raw probe responses saved as fixtures in `tests/fixtures/responses/` | Keep probe output uncommitted | `call_llm` parsing (content, usage, provider) is tested against the real OpenRouter response format without new calls. |
 
 ## 9. Open questions
 
@@ -566,6 +572,37 @@ typical_length:
 5. **Resolved:** no longer needed; out of credits is detected from HTTP 402 (D32).
 6. Reason for D38 (dropping ambiguity points) is not stated.
 7. Confirm the usage fields OpenRouter returns (`usage.cost`, `usage.completion_tokens_details.reasoning_tokens`, `provider`), needed for D41.
+
+## 10. Testing
+
+Four levels, cheapest first (D42). Level 1 needs no API key.
+
+| Level | What it checks | How | Cost | When |
+|---|---|---|---|---|
+| 1. Unit tests | Pipeline logic: validation, retries, 429/402 handling, resume, usage ledger, file layout | `python -m pytest` with a fake `call_llm` and fixtures | Free | Every step of every feature |
+| 2. Model probe | Each configured model honors strict `json_schema` and `seed` on the listed providers; whether `temperature` takes effect with reasoning on; which usage fields come back (§9.1, 9.2, 9.7) | One small call per model with a tiny schema; raw responses saved as fixtures (D44) | < $0.01 | When `call_llm` is built, and again whenever a model or provider changes |
+| 3. Smoke run | Prompts and models produce valid, realistic documents with planted issues; cost per document | `python generate.py config.smoke.yaml` (2 tools × 2 documents) | ~$0.10–0.30 (estimate) | When the pipeline first runs end to end, and after prompt changes |
+| 4. Full run | The final dataset | `python generate.py config.yaml` | ~$1–1.5 (estimate) | After a passing smoke run |
+
+**Level 1: unit tests.**
+- **Fake `call_llm`** (a pytest `monkeypatch` fixture): returns scripted `(dict, Usage)` answers, so a test can force e.g. invalid HTML twice and then valid output, or a `BudgetExhausted` in the middle of a document. Everything after the call (validation, retries, ledger, file writing) runs for real.
+- **Fake `requests.post`** for testing `call_llm` itself: pretend HTTP responses for 200, invalid JSON, 402, 429 with and without `Retry-After`, and "no endpoints available".
+- **Fixtures** in `tests/fixtures/`: flat TOC entries, section HTML, a small data folder for `validate.py`, and `responses/` with the recorded probe responses. The recorded responses are replayed through the fake `requests.post`, so `call_llm` parsing is tested against the real response format.
+- **Real inputs:** tests load the real `config.yaml`, `config.smoke.yaml`, `style_guides/` and `prompts/`, so a broken key, guide or placeholder fails before any API call.
+
+**Level 2: recorded probe responses.** The probe saves each model's raw response body (no headers, no API key) as `tests/fixtures/responses/probe_{model}.json`, e.g. `probe_deepseek-v4.1-flash-1017.json` and `probe_gemma-4-31b-it.json`. They are re-recorded when a model or provider changes.
+
+**Level 3: smoke config.** `config.smoke.yaml` is a complete copy of `config.yaml` (`load_config` requires every key) with three differences:
+- `generation.num_tools: 2`
+- `generation.docs_per_tool: 2`
+- paths under `smoke/`: `smoke/data`, `smoke/.cache`, `smoke/logs` (not committed)
+
+Models, prompts, guides and limits are the same as in the full run; any change to `config.yaml` values is made in both files. Check the smoke output:
+- `python validate.py smoke/data` passes
+- the HTML reads like a real legal document of that type
+- planted issues are in meta and verified by the judge
+- section word counts are within range
+- cost per document in meta matches the estimate
 
 ## Changelog
 
@@ -593,3 +630,4 @@ typical_length:
   - **Config:** `api.require_parameters`, `api.allow_fallbacks` and `models.*.providers` added.
   - **Failure handling:** out of credits (402) replaces daily-limit detection (D31, D32).
   - **Open questions:** §9.1, 9.4 and 9.5 resolved; 9.2 now asks about DeepSeek; 9.7 added.
+- **Testing (2026-11-04):** added §10 with four test levels, and decisions D42 (no free-model runs), D43 (committed `config.smoke.yaml`) and D44 (probe responses as fixtures). §5 lists `config.smoke.yaml`, `smoke/` and `tests/fixtures/responses/`.

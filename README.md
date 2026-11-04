@@ -63,6 +63,7 @@ cp .env.example .env                # then set OPENROUTER_API_KEY in .env
 
 ```bash
 python -m pytest                    # run the tests (no API calls)
+python generate.py config.smoke.yaml  # small paid smoke run, 2 tools × 2 docs (not implemented yet)
 python generate.py config.yaml      # generate the dataset (not implemented yet)
 python validate.py data/            # validate generated files (not implemented yet)
 ```

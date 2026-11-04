@@ -1,0 +1,70 @@
+# Smoke run (design §10): same as config.yaml except num_tools, docs_per_tool and paths.
+seed: 42
+
+paths:
+  data_dir: smoke/data
+  guides_dir: style_guides
+  prompts_dir: prompts
+  cache_dir: smoke/.cache
+  log_dir: smoke/logs
+
+api:
+  base_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  timeout_s: 120
+  require_parameters: true                  # only providers that support every request parameter
+  allow_fallbacks: false                    # never leave the providers list
+
+models:
+  tool_ideation:
+    id: deepseek/deepseek-v4.1-flash-1017
+    reasoning: {effort: high}
+    providers: [deepinfra/fp8, inference-net/fp8, nebius/fp8]
+  toc:
+    id: deepseek/deepseek-v4.1-flash-1017
+    reasoning: {effort: high}
+    providers: [deepinfra/fp8, inference-net/fp8, nebius/fp8]
+  section:                                  # also used for repairs
+    id: google/gemma-4-31b-it
+    reasoning: {enabled: false}
+    providers: [crusoe/bf16, parasail/fp8, deepinfra/fp8]
+  judge:                                    # must differ from the section model
+    id: deepseek/deepseek-v4.1-flash-1017
+    reasoning: {effort: high}
+    providers: [deepinfra/fp8, inference-net/fp8, nebius/fp8]
+
+temperature:
+  tool_ideation: 0.95
+  toc_range: [0.7, 0.9]                     # sampled per document
+  section_range: [0.5, 0.7]                 # sampled per document
+  judge: 0.2
+
+generation:
+  num_tools: 2
+  docs_per_tool: 2
+  doc_types:
+    - privacy_policy
+    - terms_of_service
+    - data_processing_agreement
+    - service_level_agreement
+    - security_whitepaper
+    - compliance_and_certifications
+  issue_types:
+    - contradiction
+    - ambiguity
+    - typo_formatting
+    - inconsistent_terminology
+  issues_per_doc: [2, 3]
+
+toc:
+  max_depth: 4
+  leaf_range: [12, 25]
+
+validation:
+  section_word_tolerance: 0.2
+
+retry:
+  max_attempts: 3
+  repair_rounds: 2
+  backoff_base_s: 2
+  max_total_wait_s: 600

@@ -115,7 +115,8 @@ Code layout: one module per design §4 group under `phase1/`, with thin `generat
 live in `phase1/datatypes.py`, each added by the first feature that needs it. LLM-calling
 modules call `llm.call_llm(...)` through the module, so tests swap it with one
 `monkeypatch.setattr` from a `fake_llm` fixture in `tests/conftest.py`. Every step leaves
-`python -m pytest` green.
+`python -m pytest` green. The test levels (unit tests, model probe, smoke run, full run) are
+defined in design §10.
 
 Each branch starts from an up-to-date `main` once its dependencies are merged:
 `git checkout main && git pull && git checkout -b <branch>`.
@@ -128,9 +129,9 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 - **Functions:** `load_config(path) -> Config`, `load_style_guides(guides_dir, doc_types) -> dict[str, StyleGuide]`, `load_prompts(prompts_dir) -> dict[str, PromptTemplate]`
 - **Files:** `phase1/config.py`, `tests/test_config.py`
 - **Steps:** see §4.
-- **Local test (no API):** the real `config.yaml` and `style_guides/`, plus broken copies in `tmp_path`, plus prompt files written in `tmp_path`.
+- **Local test (no API):** the real `config.yaml`, `config.smoke.yaml` and `style_guides/`, plus broken copies in `tmp_path`, plus prompt files written in `tmp_path`.
 - **Real API:** none.
-- **Done:** the real config and all 6 guides load; every missing key, bad range, missing guide, missing guide field and missing placeholder gives an error that names it; pytest is green.
+- **Done:** both real configs and all 6 guides load; every missing key, bad range, missing guide, missing guide field and missing placeholder gives an error that names it; pytest is green.
 
 ### F2 `feat/planning`
 - **From:** `main` after F1 · **Depends on:** F1 (tests build a cfg from it)
@@ -202,15 +203,16 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 - **From:** `main` after F1 · **Depends on:** F1
 - **Goal:** one OpenRouter call with strict `json_schema`, fixed provider routing, usage reporting, 429/402 handling, the attempt wrapper, and the usage ledger.
 - **Functions:** `call_llm(model_cfg, messages, schema, temperature, seed) -> (dict, Usage)`, `with_attempts(label, produce, validate, ledger, max_attempts=cfg.retry.max_attempts) -> result`, `append_usage(ledger, label, attempt, ok, usage)`, `read_usage(path) -> list[UsageEntry]`, `sum_usage(entries) -> UsageTotals`, `run_usage(cache_dir, run_id) -> UsageTotals`; exceptions `BudgetExhausted`, `CallError` (carries `usage` when the call was billed), `GenerationFailed`
-- **Files:** `phase1/llm.py`, `phase1/datatypes.py` (`Usage`, `Ledger`), `tests/test_llm.py`
+- **Files:** `phase1/llm.py`, `phase1/datatypes.py` (`Usage`, `Ledger`), `tests/test_llm.py`, `tests/fixtures/responses/probe_*.json`
 - **Steps:**
   1. `Usage`/`Ledger` + `append_usage`, `read_usage`, `sum_usage`, `run_usage` → `feat(llm): Add usage ledger`
   2. Exceptions + `with_attempts` (ledger entry for every attempt) → `feat(llm): Add attempt wrapper and errors`
   3. `call_llm` success path (payload with strict schema, reasoning, seed, `provider` block, usage; JSON parse → `CallError(usage)`) → `feat(llm): Call OpenRouter with strict JSON schema`
   4. 429 handling (Retry-After, backoff, `max_total_wait_s` → `BudgetExhausted`) and 402 → `BudgetExhausted` → `feat(llm): Handle rate limits and out of credit`
+  5. Run the probe, save the raw response bodies, and add a test that replays them through the fake `requests.post` → `test(llm): Add recorded probe responses`
 - **Local test:** monkeypatch `requests.post` and `time.sleep` with fake responses: 200 with usage, invalid JSON (usage still recorded), 500, 402, 429 with Retry-After, 429 without it, a wait-cap overflow, and "no endpoints available". The payload must contain `provider.order`, `allow_fallbacks: false` and `require_parameters: true`. 429s must not count as attempts, `BudgetExhausted` must pass through `with_attempts`, and every attempt (failed ones too) must land in the ledger with the right `run_id`. `sum_usage`/`run_usage` totals are checked on fixture ledgers.
-- **Real API:** one manual probe per model with a tiny schema (not committed). It confirms strict schema and seed on the listed providers (§9.1), whether DeepSeek honors `temperature` with reasoning on (§9.2: same prompt at 0.2 and 1.0), and the usage fields (`usage.cost`, reasoning tokens, `provider`; §9.7). You record the findings in `phase1_design.md` §9/Changelog.
-- **Done:** fake-response tests green; a real call to each configured model returns schema-valid JSON and a ledger entry with tokens, cost and provider.
+- **Real API:** design §10 level 2, one manual probe per model with a tiny schema. The probe code is not committed; its raw response bodies (no headers, no key) are saved as `tests/fixtures/responses/probe_deepseek-v4.1-flash-1017.json` and `probe_gemma-4-31b-it.json` (D44). It confirms strict schema and seed on the listed providers (§9.1), whether DeepSeek honors `temperature` with reasoning on (§9.2: same prompt at 0.2 and 1.0), and the usage fields (`usage.cost`, reasoning tokens, `provider`; §9.7). You record the findings in `phase1_design.md` §9/Changelog.
+- **Done:** fake-response tests green, including the replayed probe responses; a real call to each configured model returns schema-valid JSON and a ledger entry with tokens, cost and provider.
 
 ### F8 `feat/tool-ideation`
 - **From:** `main` after F7 · **Depends on:** F1, F7
@@ -285,8 +287,8 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
   3. `main`: dotenv, `run_id`, tools, selection, resume skip, `BudgetExhausted`/`GenerationFailed` stop, run summary with `run_usage`, logging to `logs/run_{timestamp}.log` → `feat(pipeline): Run all documents with resume`
   4. Run commands in README/CLAUDE.md → `docs: Add generate and validate commands`
 - **Local test:** a scripted `fake_llm` that answers by schema, with a small `tmp_path` config (1 tool, 1 doc, `leaf_range` [4, 6], `issues_per_doc` [2, 2]). A full fake run writes outputs that pass `validate.py`. Raise `BudgetExhausted` mid-document, rerun, and check that cached sections and the repair round are reused, meta is written last, and meta usage covers both runs. A `GenerationFailed` run exits 1 with a summary.
-- **Real API:** one full document with a small scratch config (~15–40 calls, a few cents), then the full run (~280–550 calls, estimated $1–1.5; resume only covers interruptions).
-- **Done:** the real full run completes; `python validate.py data/` passes all 20 docs; the run summary lists flagged docs.
+- **Real API:** design §10 levels 3 and 4. First the smoke run, `python generate.py config.smoke.yaml` (2 tools × 2 documents, outputs under `smoke/`, ~$0.10–0.30), checked with `python validate.py smoke/data` and by reading the output; tune prompts and rerun as needed. Then the full run (~280–550 calls, estimated $1–1.5; resume only covers interruptions).
+- **Done:** the smoke run passes the §10 checks; the real full run completes; `python validate.py data/` passes all 20 docs; the run summary lists flagged docs.
 
 ## 3. Order and dependency graph
 
@@ -425,7 +427,7 @@ Every requirement is covered.
 11. **Commit `style_guides/sources/`?** *Resolved:* no, it's ignored in B1.
 12. **Unused guide fields.** `certification_profile` and `certification_catalog` (compliance guide) and `sources` (all guides) aren't rendered by `generate_toc` per §4, so they're ignored. Intended?
 13. **Python version.** *Resolved:* keep 3.11+. Install Python 3.11 before creating the venv (the machine has 3.10.12).
-14. **Names not in the design.** Package `phase1/`, `phase1/datatypes.py`, `tests/`, `tests/conftest.py`. OK?
+14. **Names not in the design.** Package `phase1/`, `phase1/datatypes.py`, `tests/`, `tests/conftest.py`. OK? (`config.smoke.yaml`, `smoke/` and `tests/fixtures/responses/` are now in design §5/§10.)
 15. **Allowed-tag list.** Should the §5 section HTML contract be a constant in `sections.py` or a config key?
 16. **Dataset commit.** When do the generated `data/` files get committed? Proposed: one `chore(data): Add generated Phase 1 dataset` commit after F13's full run.
 17. **Bootstrap without a PR.** Bootstrap commits go straight to `main` while features use PRs. OK?
