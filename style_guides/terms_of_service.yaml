@@ -1,0 +1,361 @@
+document_type: terms_of_service
+purpose: >-
+  A binding contract that sets the rules for accessing and using an AI software
+  service, allocating rights, responsibilities and risk between the provider and
+  the individual user or the business customer who accepts it.
+scope: >-
+  Covers who may use the service and how, account and user management, permitted
+  and prohibited uses, ownership and handling of inputs, outputs and other user
+  content, intellectual property, fees and subscriptions, confidentiality and data
+  protection hooks, warranties, liability limits, indemnities, termination,
+  dispute resolution, changes to the terms and standard boilerplate. It usually
+  leaves detailed privacy practices, data processing terms, acceptable-use rules,
+  service-specific rules and support policies to companion documents that it
+  incorporates by reference. Documents of this type vary along several axes:
+  consumer terms address an individual in a friendly second-person voice, include
+  minimum-age rules, subscription and cancellation mechanics and carve-outs for
+  mandatory consumer rights, while business terms address a customer
+  organisation, use mutual obligations, order forms, confidentiality, publicity
+  and negotiated-style liability caps and indemnities; model and API providers
+  focus on inputs, outputs, model training and output accuracy, while developer
+  platforms and workplace software providers add user-generated content
+  licensing, repository or workspace visibility, cloud versus self-managed
+  deployment, service levels and support; region-first variants for the European
+  consumer market add statutory withdrawal rights, data switching, local
+  conformity guarantees and mediation, whereas US-first variants rely on
+  mandatory individual arbitration, class-action waivers and US export and
+  government-use clauses.
+core_topics:
+  - name: "Introduction, acceptance and contracting parties"
+    description: "Opens the agreement by identifying the parties, the services covered, how the terms are accepted and which companion documents form part of them."
+    content_points:
+      - "welcome and effective date"
+      - "services and users covered"
+      - "contracting entity by region"
+      - "acceptance by click or use"
+      - "authority to bind an organisation"
+      - "work-email accounts linked to an organisation (optional)"
+      - "consumer versus business terms pointer"
+      - "companion policies incorporated by reference"
+      - "supplemental product-specific terms"
+      - "plain-language key points summary (optional)"
+  - name: "About the provider and how to contact it"
+    description: "Briefly describes the provider and its mission and gives the channels for questions, support and legal contact."
+    content_points:
+      - "provider description and mission"
+      - "registered company details"
+      - "contact channels for questions"
+      - "postal address for legal notices (optional)"
+  - name: "Eligibility, accounts and users"
+    description: "Sets who may register, what account information is required and who is responsible for account security and for activity by users within the account."
+    content_points:
+      - "minimum age and guardian consent"
+      - "accurate registration information"
+      - "credential confidentiality and no sharing"
+      - "responsibility for account activity"
+      - "one individual per user login (optional)"
+      - "organisation administrators and end users"
+      - "account closure by the user"
+      - "domain ownership verification (optional)"
+      - "affiliate use of the account (optional)"
+      - "personal versus organisation account controls (optional)"
+      - "deployment on customer, partner or provider infrastructure (optional)"
+  - name: "Access to the services and permitted use"
+    description: "Grants the limited right to access and use the services and explains how the provider may change, limit or improve them."
+    content_points:
+      - "limited non-exclusive right to use"
+      - "use only in line with the terms and policies"
+      - "integration of the services into customer applications (optional)"
+      - "usage and rate limits"
+      - "service updates and modifications"
+      - "notice and exit for materially reduced functionality (optional)"
+      - "service level commitments (optional)"
+      - "benchmarking and comparative testing (optional)"
+      - "programmatic interface usage rules (optional)"
+      - "support and advisory services (optional)"
+  - name: "Acceptable use and restrictions"
+    description: "Lists the conduct users and customers must avoid when using the services, usually by referencing a separate usage policy."
+    content_points:
+      - "compliance with law and usage policy"
+      - "no infringement of others' rights"
+      - "no reverse engineering or model extraction"
+      - "no building competing models or services"
+      - "no scraping or automated extraction"
+      - "no circumvention of limits or safeguards"
+      - "no misrepresenting outputs as human-made (optional)"
+      - "no interference with service security"
+      - "no resale or transfer of keys or accounts"
+      - "customer responsibility for end-user compliance"
+      - "restrictions on high-stakes reliance (optional)"
+      - "sensitive data and minors' data restrictions (optional)"
+  - name: "Inputs, outputs and user content"
+    description: "Allocates ownership of and responsibility for what users submit and receive, and explains how the provider may use that content."
+    content_points:
+      - "definition of inputs, outputs and content"
+      - "user retains inputs and owns outputs"
+      - "provider assigns its rights in outputs"
+      - "user responsibility and rights clearance for inputs"
+      - "accuracy limits and independent verification"
+      - "outputs may be similar across users"
+      - "provider use of content to operate the service"
+      - "model training use and opt-out"
+      - "restrictions on using outputs"
+      - "agent or tool actions taken on the user's behalf (optional)"
+      - "license grant for hosted user content (optional)"
+      - "license to other users of public content (optional)"
+      - "contributions under the project's license (optional)"
+      - "moral rights waiver (optional)"
+      - "private workspace confidentiality and access (optional)"
+      - "shared conversation links (optional)"
+      - "experimental or preview models (optional)"
+  - name: "Content moderation and infringement notices"
+    description: "Explains how the provider monitors, removes or disables content and how rights holders and users report infringing or unlawful material."
+    content_points:
+      - "no obligation to monitor"
+      - "right to remove or disable content"
+      - "automated and human moderation"
+      - "reporting unlawful or infringing content"
+      - "copyright notice-and-takedown procedure"
+      - "repeat infringer termination"
+      - "third-party content responsibility"
+      - "counter-notice and complaint channels (optional)"
+  - name: "Third-party services and integrations"
+    description: "Clarifies that connectors, integrations and third-party content are governed by their own terms and are outside the provider's responsibility."
+    content_points:
+      - "optional use at the user's discretion"
+      - "separate third-party terms apply"
+      - "no provider warranty or liability"
+      - "data shared with the third party"
+      - "third-party and open-source code policies (optional)"
+  - name: "Beta, preview and free offerings"
+    description: "Sets the reduced commitments that apply to trial, evaluation, free or pre-release features."
+    content_points:
+      - "identification of beta or preview features"
+      - "offered as-is with no support or service levels"
+      - "may change or end at any time"
+      - "confidentiality of pre-release information"
+      - "limited or no liability"
+      - "evaluation for non-commercial purposes (optional)"
+  - name: "Software, applications and updates"
+    description: "Covers downloadable software, mobile apps and the updates the provider may push to them."
+    content_points:
+      - "automatic and mandatory updates"
+      - "optional feature updates"
+      - "open-source components and their licenses"
+      - "mobile app marketplace terms (optional)"
+      - "source code provided for modification (optional)"
+      - "license verification and instance limits (optional)"
+  - name: "Privacy, data protection and security"
+    description: "Links the agreement to the provider's privacy notice and data processing terms and states the security commitments that apply."
+    content_points:
+      - "privacy notice reference"
+      - "data processing addendum incorporated (optional)"
+      - "controller versus processor roles (optional)"
+      - "information security program (optional)"
+      - "audit reports on request (optional)"
+      - "regulated health data restrictions (optional)"
+      - "aggregated or anonymised usage statistics (optional)"
+  - name: "Confidentiality"
+    description: "Defines confidential information exchanged between the parties and sets the duty to protect it."
+    content_points:
+      - "definition of confidential information"
+      - "exclusions from confidentiality"
+      - "use only to perform the agreement"
+      - "need-to-know disclosure"
+      - "compelled legal disclosure"
+      - "return or destruction on request"
+      - "injunctive relief for breach"
+  - name: "Intellectual property and feedback"
+    description: "Reserves the provider's ownership of the services and brand and sets how feedback may be used."
+    content_points:
+      - "provider ownership of the services"
+      - "reservation of rights"
+      - "no implied licenses"
+      - "brand and logo use limits"
+      - "free use of feedback"
+      - "license to reuse the provider's policies (optional)"
+  - name: "Publicity"
+    description: "States whether and how either party may name the other in marketing or public statements."
+    content_points:
+      - "customer name and logo in marketing"
+      - "opt-out or prior written consent"
+      - "case studies and quotes (optional)"
+  - name: "Fees, payment and subscriptions"
+    description: "Explains pricing, billing cycles, renewals, taxes and the consequences of non-payment."
+    content_points:
+      - "pricing and accepted payment methods"
+      - "subscription billing and automatic renewal"
+      - "taxes"
+      - "refunds and non-refundable fees"
+      - "cancellation of a paid plan"
+      - "upgrades, downgrades and plan changes"
+      - "usage-based billing"
+      - "payment authorisation"
+      - "suspension for late payment"
+      - "order forms, acceptance and resellers (optional)"
+      - "authorised purchasers (optional)"
+      - "price changes with notice (optional)"
+      - "invoice disputes (optional)"
+      - "prepaid or promotional credits (optional)"
+      - "return window for initial orders (optional)"
+  - name: "Term, suspension and termination"
+    description: "Sets how long the agreement lasts, when each party may end or suspend it and what happens afterwards."
+    content_points:
+      - "term and renewal"
+      - "termination by the user or customer"
+      - "termination for convenience or breach"
+      - "suspension for security, legal or policy reasons"
+      - "effects of termination"
+      - "data deletion and retrieval after termination"
+      - "survival of key clauses"
+      - "appeal of suspension (optional)"
+      - "discontinuation of the service with refund (optional)"
+  - name: "Warranties and disclaimers"
+    description: "States any promises the provider makes about the services and disclaims all others."
+    content_points:
+      - "as-is and as-available provision"
+      - "disclaimer of implied warranties"
+      - "no guarantee of accuracy or uninterrupted service"
+      - "mutual authority warranties"
+      - "user warranties on rights and compliance"
+      - "performance warranty and remedy (optional)"
+      - "warranty exclusions (optional)"
+      - "statutory consumer guarantees preserved (optional)"
+  - name: "Limitation of liability"
+    description: "Excludes certain types of damages and caps each party's total liability under the agreement."
+    content_points:
+      - "exclusion of indirect and consequential damages"
+      - "aggregate liability cap"
+      - "carve-outs where law prohibits limits"
+      - "excluded or super-cap claims (optional)"
+      - "professional diligence standard for consumers (optional)"
+  - name: "Indemnification"
+    description: "Allocates responsibility for defending and paying third-party claims."
+    content_points:
+      - "provider indemnity for IP claims"
+      - "user or customer indemnity for misuse"
+      - "exclusions from indemnity"
+      - "notice, control and cooperation procedure"
+      - "mitigation by modification or replacement"
+      - "sole and exclusive remedy"
+      - "release for disputes between users (optional)"
+  - name: "Changes to the terms"
+    description: "Explains how the provider may update the agreement and how users are told and may respond."
+    content_points:
+      - "right to modify the terms"
+      - "reasons for changes (optional)"
+      - "advance notice of material changes"
+      - "effective date of updates"
+      - "continued use as acceptance"
+      - "objection or termination right (optional)"
+  - name: "Dispute resolution and governing law"
+    description: "Sets the governing law, the forum for disputes and any required pre-dispute or arbitration process."
+    content_points:
+      - "governing law"
+      - "exclusive venue and jurisdiction"
+      - "equitable relief"
+      - "consumer home-court rights (optional)"
+      - "informal dispute resolution first (optional)"
+      - "mandatory individual arbitration (optional)"
+      - "class action and jury trial waiver (optional)"
+      - "batch arbitration (optional)"
+      - "small-claims and IP exceptions (optional)"
+      - "consumer mediation (optional)"
+  - name: "General terms"
+    description: "Collects the standard boilerplate clauses that govern how the agreement as a whole is interpreted and enforced."
+    content_points:
+      - "entire agreement"
+      - "severability"
+      - "no waiver"
+      - "assignment"
+      - "force majeure"
+      - "notices"
+      - "export controls and sanctions"
+      - "government end users"
+      - "independent contractors"
+      - "no third-party beneficiaries"
+      - "electronic communications (optional)"
+      - "order of precedence for conflicting terms (optional)"
+      - "interpretation and headings (optional)"
+      - "compliance with laws and law-enforcement requests (optional)"
+      - "subcontractors and affiliates (optional)"
+      - "geographic availability limits (optional)"
+      - "mandatory local consumer rights (optional)"
+  - name: "Definitions"
+    description: "Gathers the capitalised terms used throughout the agreement into a single glossary."
+    content_points:
+      - "account, user and customer terms"
+      - "service, product and content terms"
+      - "input and output terms"
+      - "commercial terms such as order and fees"
+      - "policy and companion document names"
+      - "contracting entity by region"
+optional_topics:
+  - name: "Statutory withdrawal right"
+    description: "Gives consumers their legal right to withdraw from a distance subscription and explains the effects."
+    content_points:
+      - "withdrawal period"
+      - "how to exercise withdrawal"
+      - "refund on withdrawal"
+      - "loss of right once performance starts"
+      - "model withdrawal form"
+  - name: "Data switching and export"
+    description: "Lets users move their data and digital assets to another provider or their own infrastructure."
+    content_points:
+      - "right to switch providers"
+      - "exportable data and assets"
+      - "switching request"
+      - "transitional period"
+      - "provider obligations during switching"
+      - "retrieval period"
+      - "data erasure"
+      - "liability and termination on switch"
+  - name: "Country-specific consumer terms"
+    description: "Adds statutory warranties and rights that apply to consumers in particular countries."
+    content_points:
+      - "legal conformity guarantee"
+      - "remedies for lack of conformity"
+      - "limitation periods for claims"
+      - "extraordinary termination right"
+      - "quoted statutory text in the local language"
+tone_and_conventions: >-
+  Write as formal, enforceable contract language, but keep sentences readable.
+  Consumer-facing terms speak directly to the reader as "you" and refer to the
+  provider as "we" or "us", may open a section with a short friendly framing
+  sentence and occasionally offer a plain-language summary before the binding
+  text; business-facing terms use third-person defined parties such as
+  "Customer", the provider's short name and "the Parties", and use "will" and
+  "must" for obligations and "may" for permissions. Introduce a capitalised
+  defined term the first time it is used, in quotation marks inside parentheses
+  right after the description, and capitalise it consistently thereafter; a
+  separate definitions section may hold the rest. Organise content as short
+  prose paragraphs, each of which may open with a brief bold run-in label
+  naming the point it covers. Enumerate conditions, exclusions and
+  obligations inline with lettered items in parentheses and, for nested
+  elements, lowercase roman numerals; use a bulleted list mainly for lists of
+  prohibited uses or examples. Tables are rare and serve only for summaries or
+  comparisons. Refer to other parts of the agreement by section title in
+  parentheses, for example "subject to the Limitation of Liability section",
+  and to companion documents such as the usage policy, privacy notice, data
+  processing addendum or service-specific terms by their name, stating that they
+  are incorporated by reference. Use stock contractual qualifiers such as "to
+  the extent permitted by applicable law", "as between the parties", "in its
+  sole discretion" and "including without limitation". Put warranty
+  disclaimers, damage exclusions, liability caps, arbitration and class-action
+  waivers in ALL CAPS, and consumer terms may add a sentence explaining that
+  capitals are used for emphasis. Deadlines and notice periods are concrete and
+  often written as a word followed by the digit in parentheses. Consumer
+  variants preserve mandatory statutory rights with explicit carve-outs. The
+  document states an effective date at the top, and region- or
+  country-specific rules, forms and addenda go in appendices at the end.
+typical_length:
+  section_words: [42, 106]
+sources: >-
+  https://www.anthropic.com/legal/consumer-terms,
+  https://www.anthropic.com/legal/commercial-terms,
+  https://openai.com/policies/row-terms-of-use/,
+  https://openai.com/policies/services-agreement/,
+  https://legal.mistral.ai/terms/eu-consumers-terms-of-service/?lang=en,
+  https://legal.mistral.ai/terms/commercial-terms-of-service/,
+  https://docs.github.com/en/site-policy/github-terms/github-terms-of-service,
+  https://www.atlassian.com/legal/atlassian-customer-agreement

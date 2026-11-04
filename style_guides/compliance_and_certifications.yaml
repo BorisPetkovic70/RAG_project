@@ -1,0 +1,516 @@
+document_type: compliance_and_certifications
+
+purpose: >-
+  Describes the security, privacy and regulatory certifications, attestations and
+  alignments a software provider maintains, and explains how customers can rely on
+  them and obtain the supporting evidence. It is read by customer security,
+  procurement, legal and compliance teams, and by their auditors, when assessing the
+  provider as a vendor.
+
+scope: >-
+  Covers the compliance program as a whole: its purpose, the division of
+  responsibility between provider and customer, the internal risk and control
+  environment, the portfolio of independent certifications and attestations, how
+  reports and certificates are obtained, support for security questionnaires,
+  privacy and data protection obligations, sector-specific regulations, AI
+  governance, guidance for customers' own compliance governance, and closing notices.
+  It excludes the full text of contracts such as processing addenda or business
+  associate agreements, the privacy policy itself, detailed security architecture,
+  and pricing. Real versions take two forms: short catalog-style entries giving one
+  or two sentences per standard alongside a question-and-answer section, and
+  long-form narrative papers that explain the program in continuous prose. SaaS
+  providers tend to stress which products and plans are in scope, subprocessors,
+  questionnaire support and gated report access. Cloud infrastructure providers
+  stress shared responsibility, inherited controls and very large catalogs of
+  regional and financial-sector regulations. Providers with AI features add AI
+  management system certification, AI regulation commitments and disclosure of
+  training data use. A complete document describes several certifications in turn,
+  each following the same pattern, and places them within the surrounding program
+  topics.
+
+core_topics:
+  - name: "Compliance program overview"
+    description: "Introduces the compliance program, why it exists and which customers it serves, including those in regulated industries."
+    content_points:
+      - "purpose of the compliance program"
+      - "customers in regulated industries"
+      - "independent verification of security, privacy and compliance controls"
+      - "coverage of global, regional and industry standards"
+      - "library of certifications and attestations"
+      - "support for customers' own compliance obligations"
+      - "resources for completing security and privacy questionnaires"
+      - "general information on region- or sector-specific regulations (optional)"
+
+  - name: "Shared responsibility for security and compliance"
+    description: "Explains how responsibility for controls is divided between provider and customer and how that split changes with the services used."
+    content_points:
+      - "provider-managed infrastructure and physical controls"
+      - "customer-managed configuration, access and application controls"
+      - "responsibilities varying by service and integration"
+      - "customer use of provider documentation for control verification"
+      - "additional customer-side safeguards such as encryption and key management"
+      - "controls inherited from hosting or subservice providers"
+      - "outsourced data center operations and regional deployments"
+      - "configuration required before regulated use"
+      - "plan or add-on prerequisites for regulated use (optional)"
+
+  - name: "Internal risk management and control environment"
+    description: "Describes the provider's internal risk governance, its control framework and the reviews and monitoring that keep controls effective."
+    content_points:
+      - "business risk management oversight"
+      - "risk assessment, remediation and escalation to leadership"
+      - "recurring operational and business reviews"
+      - "code of conduct and periodic employee training"
+      - "organizational structure, reporting lines and segregation of duties"
+      - "personnel screening and onboarding"
+      - "unified internal control framework mapped to external requirements"
+      - "control automation across control domains"
+      - "pre-launch security and architecture reviews"
+      - "post-launch reviews and vulnerability scanning"
+      - "continuous control monitoring"
+
+  - name: "Independent certifications and attestations"
+    description: "Presents the portfolio of third-party audits, certifications and assessments and explains how they give customers assurance without auditing the provider directly."
+    content_points:
+      - "third-party attestations in place of direct customer audits"
+      - "validation of control design and operating effectiveness"
+      - "recurring independent audits"
+      - "audits against global and regional frameworks"
+      - "audits by customers or government auditors where regulation requires (optional)"
+      - "grouping into certifications, laws and regulations, and frameworks or alignments"
+      - "filtering by region, industry and focus area"
+      - "separate attestations for affiliated product lines or government editions"
+      - "product coverage varying by program, rollout or acquisition"
+      - "public registry listings (optional)"
+      - "trademark notices for certification marks (optional)"
+
+  - name: "Access to compliance reports and documentation"
+    description: "Explains how customers and prospects obtain reports, certificates and policies, and how report coverage is kept current."
+    content_points:
+      - "self-service access to compliance reports"
+      - "corporate email verification for gated documents"
+      - "confidentiality terms accepted before report download"
+      - "requests through account team, sales or support"
+      - "public summary reports versus restricted full reports"
+      - "downloadable certificates"
+      - "report coverage period and release timing"
+      - "bridge letters between reporting periods"
+      - "separate reports per product group"
+      - "access to the information security policy"
+      - "availability of newly released reports"
+
+  - name: "Security questionnaires and customer due diligence"
+    description: "Describes the resources that help customers complete vendor risk assessments and security questionnaires about the provider."
+    content_points:
+      - "vendor, supplier and security due-diligence questionnaires"
+      - "pre-filled industry-standard questionnaires"
+      - "cloud controls questionnaire responses"
+      - "standardized information gathering questionnaire"
+      - "higher-education vendor assessment toolkit"
+      - "mapping of questionnaire answers to audited controls"
+      - "security and encryption whitepapers as supporting evidence"
+      - "support channel for remaining questions"
+
+  - name: "Privacy and data protection compliance"
+    description: "Covers how the provider supports privacy laws and data protection obligations when it processes customer data."
+    content_points:
+      - "support for comprehensive privacy laws"
+      - "data processing addendum"
+      - "pre-signed or standard processing terms"
+      - "cross-border transfer mechanisms"
+      - "data residency options and transfer rules"
+      - "subprocessor list with roles, locations and data types"
+      - "subprocessor change notifications"
+      - "data center and hosting locations"
+      - "privacy statement and privacy data sheets"
+      - "provider role as data processor"
+      - "consumer privacy rights under state laws"
+      - "privacy certifications for processors and cross-border rules (optional)"
+
+  - name: "Industry and sector regulations"
+    description: "Explains how the service supports regulated industries where obligations rest with the customer and no single certification applies."
+    content_points:
+      - "healthcare business associate agreements"
+      - "safeguards for protected health information"
+      - "regulations without an official certification"
+      - "recognized frameworks used as substitute assurance"
+      - "financial services record retention and outsourcing rules"
+      - "student education record privacy"
+      - "public sector requirements"
+      - "automotive information security assessments"
+      - "life sciences good practice guidance (optional)"
+      - "service configurable to meet a specific rule"
+      - "contact point for regulated-use requirements"
+
+  - name: "AI governance and responsible AI"
+    description: "Describes certification of the AI management system, commitments under AI regulation and transparency about how AI features use data."
+    content_points:
+      - "AI management system certification"
+      - "AI risk management controls"
+      - "readiness for AI-specific regulation"
+      - "responsible AI governance and transparency"
+      - "disclosure of datasets used for AI training"
+      - "AI products and features in certification scope"
+      - "AI topics within security questionnaires (optional)"
+
+  - name: "Customer compliance governance"
+    description: "Advises customers on building and verifying their own compliance program on top of the provider's controls."
+    content_points:
+      - "identifying applicable compliance objectives"
+      - "establishing a control environment"
+      - "validation depth based on risk tolerance"
+      - "verifying operating effectiveness"
+      - "reviewing provider reports and documentation"
+      - "documenting controls owned by outside parties"
+      - "consolidated cloud control framework"
+      - "customer's own assessment of vendor compliance"
+
+  - name: "Summary of compliance commitments"
+    description: "Closes by restating the provider's commitment to secure, compliant operation and how customers can follow up."
+    content_points:
+      - "security and resilience as top priority"
+      - "recap of controls, monitoring and risk oversight"
+      - "ongoing independent audits"
+      - "combined effect with customer-managed controls"
+      - "contact for sector-specific questions"
+
+  - name: "Document history and legal notices"
+    description: "Records publication and revision history and limits the legal effect of the document."
+    content_points:
+      - "publication date"
+      - "revision history"
+      - "notice that content may be outdated (optional)"
+      - "informational purpose only"
+      - "subject to change without notice"
+      - "no commitments, warranties or assurances"
+      - "no modification of customer agreements"
+      - "customer's own independent assessment"
+      - "subscription to update notifications (optional)"
+
+optional_topics:
+  - name: "Government and public-sector editions"
+    description: "Describes a dedicated government edition of the service and the separate authorizations and assessments it holds."
+    content_points:
+      - "separate government edition"
+      - "federal, state and defense authorizations"
+      - "authorization impact levels"
+      - "criminal justice information requirements"
+      - "authorizations in progress"
+
+  - name: "Vulnerability reporting and security advisories"
+    description: "Explains how customers and researchers report vulnerabilities and how security bulletins are published."
+    content_points:
+      - "customer reporting channel"
+      - "encrypted vulnerability reports"
+      - "researcher disclosure policy"
+      - "security bulletins"
+      - "bulletin notifications"
+      - "recommendation to run current versions"
+
+  - name: "Business continuity and operational resilience"
+    description: "Covers continuity planning and resilience obligations relevant to compliance reviews."
+    content_points:
+      - "business continuity and disaster recovery documentation"
+      - "business continuity management system certification"
+      - "financial-sector operational resilience rules"
+
+  - name: "Corporate responsibility and trade compliance statements"
+    description: "Collects company-level statements that procurement and legal reviews request alongside certifications."
+    content_points:
+      - "modern slavery statement"
+      - "global trade and export compliance"
+      - "federal procurement restrictions on certain telecommunications equipment"
+
+certification_profile:
+  description: "A section about one certification or regulation explains what it is, how the provider was assessed against it, what is covered, how current the result is, and how customers obtain the evidence."
+  content_points:
+    - "what the standard, framework or regulation is"
+    - "issuing or governing body"
+    - "objectives and criteria covered"
+    - "type of assessment: certification, attestation, self-assessment or authorization"
+    - "independence and qualification of the assessor"
+    - "assessment standard or methodology applied"
+    - "whether an official certification exists"
+    - "products, services and plans in scope"
+    - "applicable regions and industries"
+    - "issue date, coverage period or validity"
+    - "bridge letters or interim updates"
+    - "how the provider's controls meet the requirements"
+    - "configuration or plan requirements for customers"
+    - "how customers obtain the report or certificate"
+    - "confidentiality terms for restricted reports"
+    - "related standards"
+
+certification_catalog:
+  # audit reports
+  - {name: "SOC 1 Type II", category: "audit report"}
+  - {name: "SOC 2 Type II", category: "audit report"}
+  - {name: "SOC 3", category: "audit report"}
+  - {name: "SOC 2 Type II with HITRUST CSF mapping", category: "audit report"}
+  - {name: "ISAE 3000 Type 2", category: "audit report"}
+  - {name: "SSAE 18 attestation", category: "audit report"}
+  - {name: "OSPAR (Singapore outsourced service provider audit report)", category: "audit report"}
+  # ISO certifications
+  - {name: "ISO/IEC 27001", category: "ISO certification"}
+  - {name: "ISO/IEC 27017", category: "ISO certification"}
+  - {name: "ISO/IEC 27018", category: "ISO certification"}
+  - {name: "ISO/IEC 27701", category: "ISO certification"}
+  - {name: "ISO/IEC 27110", category: "ISO certification"}
+  - {name: "ISO 22301", category: "ISO certification"}
+  - {name: "ISO 9001", category: "ISO certification"}
+  - {name: "ISO 14001", category: "ISO certification"}
+  - {name: "ISO 50001", category: "ISO certification"}
+  - {name: "ISO/IEC 20000-1", category: "ISO certification"}
+  - {name: "SNI 27001 (Indonesia)", category: "ISO certification"}
+  # AI governance
+  - {name: "ISO/IEC 42001", category: "AI governance"}
+  - {name: "EU AI Act", category: "AI governance"}
+  # security frameworks and cloud assurance
+  - {name: "CSA STAR Self-Assessment", category: "security framework"}
+  - {name: "CSA STAR Level 2", category: "security framework"}
+  - {name: "HITRUST CSF", category: "security framework"}
+  - {name: "NIST SP 800-53", category: "security framework"}
+  - {name: "NIST SP 800-171", category: "security framework"}
+  - {name: "NIST SP 800-34 contingency planning", category: "security framework"}
+  - {name: "CIS Benchmarks", category: "security framework"}
+  - {name: "FIPS 140-2 validation", category: "security framework"}
+  - {name: "Minimum Viable Secure Product (MVSP)", category: "security framework"}
+  - {name: "GSMA SAS-SM", category: "security framework"}
+  - {name: "MPA content security best practices", category: "security framework"}
+  - {name: "Data center tier standards", category: "security framework"}
+  - {name: "European Cloud User Coalition principles", category: "security framework"}
+  - {name: "SWIPO data portability code of conduct", category: "security framework"}
+  - {name: "ENISA cybersecurity guidance", category: "security framework"}
+  # assessment questionnaires
+  - {name: "CSA Consensus Assessments Initiative Questionnaire (CAIQ)", category: "assessment questionnaire"}
+  - {name: "Standardized Information Gathering (SIG) questionnaire", category: "assessment questionnaire"}
+  - {name: "Higher Education Community Vendor Assessment Toolkit (HECVAT)", category: "assessment questionnaire"}
+  # accessibility
+  - {name: "Voluntary Product Accessibility Template (VPAT)", category: "accessibility standard"}
+  - {name: "Web Content Accessibility Guidelines (WCAG)", category: "accessibility standard"}
+  - {name: "U.S. Section 508", category: "accessibility standard"}
+  - {name: "EN 301 549", category: "accessibility standard"}
+  # privacy laws and frameworks
+  - {name: "GDPR", category: "privacy law"}
+  - {name: "EU Standard Contractual Clauses", category: "privacy framework"}
+  - {name: "EU Cloud Code of Conduct", category: "privacy framework"}
+  - {name: "Global Cross-Border Privacy Rules (CBPR) certification", category: "privacy framework"}
+  - {name: "Global Privacy Recognition for Processors (PRP) certification", category: "privacy framework"}
+  - {name: "EU Data Act", category: "privacy law"}
+  - {name: "EU Digital Markets Act", category: "sector regulation"}
+  - {name: "California Consumer Privacy Act (CCPA)", category: "privacy law"}
+  - {name: "U.S. state privacy laws", category: "privacy law"}
+  - {name: "COPPA", category: "privacy law"}
+  - {name: "Lei Geral de Proteção de Dados (LGPD)", category: "privacy law"}
+  - {name: "Swiss Federal Act on Data Protection (nFADP / revFADP)", category: "privacy law"}
+  - {name: "Australian Privacy Act and Australian Privacy Principles", category: "privacy law"}
+  - {name: "New Zealand Privacy Act", category: "privacy law"}
+  - {name: "Japan Act on the Protection of Personal Information", category: "privacy law"}
+  - {name: "Korea Personal Information Protection Act (PIPA)", category: "privacy law"}
+  - {name: "Hong Kong Personal Data (Privacy) Ordinance (PDPO)", category: "privacy law"}
+  - {name: "Singapore PDPA", category: "privacy law"}
+  - {name: "Malaysia PDPA", category: "privacy law"}
+  - {name: "Philippines Data Privacy Act", category: "privacy law"}
+  - {name: "Thailand PDPA", category: "privacy law"}
+  - {name: "Taiwan Personal Data Protection Act", category: "privacy law"}
+  - {name: "Indonesia Personal Data Protection Law", category: "privacy law"}
+  - {name: "Vietnam Personal Data Protection Decree", category: "privacy law"}
+  - {name: "Argentina Personal Data Protection Law", category: "privacy law"}
+  - {name: "Canada PIPEDA", category: "privacy law"}
+  - {name: "Ontario PHIPA", category: "privacy law"}
+  - {name: "Québec Law 25", category: "privacy law"}
+  - {name: "South Africa POPI Act", category: "privacy law"}
+  - {name: "Israel Privacy Protection Authority requirements", category: "privacy law"}
+  - {name: "DSA requirements (Bangladesh)", category: "privacy law"}
+  # sector regulations (healthcare, education, finance, life sciences, energy, telecom, payments)
+  - {name: "HIPAA", category: "sector regulation"}
+  - {name: "FERPA", category: "sector regulation"}
+  - {name: "GLBA", category: "sector regulation"}
+  - {name: "FINRA Rule 17a-4", category: "sector regulation"}
+  - {name: "U.S. SEC requirements", category: "sector regulation"}
+  - {name: "FFIEC guidance", category: "sector regulation"}
+  - {name: "U.S. federal banking agency guidance", category: "sector regulation"}
+  - {name: "GxP (good clinical, laboratory and manufacturing practices)", category: "sector regulation"}
+  - {name: "NERC CIP", category: "sector regulation"}
+  - {name: "PCI DSS", category: "sector regulation"}
+  - {name: "PCI 3DS Core Security Standard", category: "sector regulation"}
+  - {name: "PCI PIN Security", category: "sector regulation"}
+  - {name: "MARS-E", category: "sector regulation"}
+  - {name: "TISAX", category: "sector regulation"}
+  - {name: "Hébergeur de Données de Santé (HDS)", category: "sector regulation"}
+  - {name: "NHS requirements (UK)", category: "sector regulation"}
+  - {name: "PMDA requirements (Japan)", category: "sector regulation"}
+  - {name: "JIIMA certification (Japan)", category: "sector regulation"}
+  - {name: "2G3M guidelines (Japan)", category: "sector regulation"}
+  - {name: "UK Telecoms Security Act", category: "sector regulation"}
+  - {name: "Digital Operational Resilience Act (DORA)", category: "operational resilience"}
+  - {name: "NIS2 Directive", category: "operational resilience"}
+  - {name: "BSI KRITIS critical infrastructure requirements", category: "operational resilience"}
+  # financial services regulators and outsourcing guidance
+  - {name: "EBA outsourcing guidelines", category: "financial services regulation"}
+  - {name: "EIOPA cloud outsourcing guidelines", category: "financial services regulation"}
+  - {name: "ESMA cloud outsourcing guidelines", category: "financial services regulation"}
+  - {name: "EU Solvency II", category: "financial services regulation"}
+  - {name: "BaFin cloud outsourcing guidance", category: "financial services regulation"}
+  - {name: "MaRisk AT 9 outsourcing", category: "financial services regulation"}
+  - {name: "FINMA outsourcing requirements", category: "financial services regulation"}
+  - {name: "UK PRA outsourcing requirements", category: "financial services regulation"}
+  - {name: "UK FCA FG16/5 cloud guidance", category: "financial services regulation"}
+  - {name: "UK FCA SYSC 8 outsourcing", category: "financial services regulation"}
+  - {name: "APRA Prudential Standard CPS 234", category: "financial services regulation"}
+  - {name: "APRA outsourcing requirements", category: "financial services regulation"}
+  - {name: "MAS Technology Risk Management Guidelines", category: "financial services regulation"}
+  - {name: "MAS outsourcing guidelines", category: "financial services regulation"}
+  - {name: "ABS guidelines (Singapore)", category: "financial services regulation"}
+  - {name: "HKMA supervisory requirements", category: "financial services regulation"}
+  - {name: "Hong Kong Insurance Authority requirements", category: "financial services regulation"}
+  - {name: "Japan FISC security guidelines", category: "financial services regulation"}
+  - {name: "Korea FSC outsourcing regulations", category: "financial services regulation"}
+  - {name: "Korea Financial Supervisory Service requirements", category: "financial services regulation"}
+  - {name: "Korea cloud service provider safety assessment", category: "financial services regulation"}
+  - {name: "Reserve Bank of India requirements", category: "financial services regulation"}
+  - {name: "IRDAI requirements (India)", category: "financial services regulation"}
+  - {name: "SEBI requirements (India)", category: "financial services regulation"}
+  - {name: "Bank Negara Malaysia requirements", category: "financial services regulation"}
+  - {name: "Bank of Thailand requirements", category: "financial services regulation"}
+  - {name: "Thailand Office of Insurance Commission requirements", category: "financial services regulation"}
+  - {name: "Bangko Sentral ng Pilipinas requirements", category: "financial services regulation"}
+  - {name: "Indonesia OJK regulation", category: "financial services regulation"}
+  - {name: "Bank Indonesia regulation", category: "financial services regulation"}
+  - {name: "State Bank of Vietnam requirements", category: "financial services regulation"}
+  - {name: "Reserve Bank of New Zealand requirements", category: "financial services regulation"}
+  - {name: "Saudi Central Bank (SAMA) requirements", category: "financial services regulation"}
+  - {name: "Qatar Central Bank cloud computing regulation", category: "financial services regulation"}
+  - {name: "Turkey BRSA requirements", category: "financial services regulation"}
+  - {name: "OSFI requirements (Canada)", category: "financial services regulation"}
+  - {name: "Central Bank of Brazil requirements", category: "financial services regulation"}
+  - {name: "BCRA requirements (Argentina)", category: "financial services regulation"}
+  - {name: "CMF requirements (Chile)", category: "financial services regulation"}
+  - {name: "Financial Superintendence of Colombia requirements", category: "financial services regulation"}
+  - {name: "CNBV requirements (Mexico)", category: "financial services regulation"}
+  - {name: "CNSF requirements (Mexico)", category: "financial services regulation"}
+  - {name: "Superintendencia de Banca requirements (Peru)", category: "financial services regulation"}
+  - {name: "ASFI requirements (Bolivia)", category: "financial services regulation"}
+  - {name: "ACPR requirements (France)", category: "financial services regulation"}
+  - {name: "Bank of Italy requirements", category: "financial services regulation"}
+  - {name: "Banco de España requirements", category: "financial services regulation"}
+  - {name: "Banco de Portugal requirements", category: "financial services regulation"}
+  - {name: "De Nederlandsche Bank requirements", category: "financial services regulation"}
+  - {name: "CSSF requirements (Luxembourg)", category: "financial services regulation"}
+  - {name: "Central Bank of Ireland requirements", category: "financial services regulation"}
+  - {name: "KNF requirements (Poland)", category: "financial services regulation"}
+  - {name: "Austrian banking and insurance supervision acts (BWG, VAG)", category: "financial services regulation"}
+  - {name: "Danish FSA requirements", category: "financial services regulation"}
+  - {name: "Swedish FSA requirements", category: "financial services regulation"}
+  - {name: "Norwegian FSA requirements", category: "financial services regulation"}
+  # government authorizations and public-sector programs (United States)
+  - {name: "FedRAMP Moderate", category: "government authorization"}
+  - {name: "FedRAMP High", category: "government authorization"}
+  - {name: "GovRAMP (formerly StateRAMP)", category: "government authorization"}
+  - {name: "TX-RAMP", category: "government authorization"}
+  - {name: "DoD Cloud Computing SRG Impact Level 4", category: "government authorization"}
+  - {name: "DISA provisional authorization", category: "government authorization"}
+  - {name: "CJIS Security Policy", category: "government authorization"}
+  - {name: "IRS Publication 1075", category: "government authorization"}
+  - {name: "CMMC", category: "government authorization"}
+  - {name: "DFARS", category: "government authorization"}
+  - {name: "FAR Section 889", category: "government authorization"}
+  - {name: "ITAR", category: "export control"}
+  - {name: "Export Administration Regulations (EAR)", category: "export control"}
+  - {name: "Canada Controlled Goods Program", category: "export control"}
+  # regional and national programs
+  - {name: "IRAP (Australia)", category: "regional program"}
+  - {name: "Essential Eight Maturity Model (Australia)", category: "regional program"}
+  - {name: "ACSC cloud security guidance (Australia)", category: "regional program"}
+  - {name: "Hosting Certification Framework (Australia)", category: "regional program"}
+  - {name: "ISMAP (Japan)", category: "regional program"}
+  - {name: "NISC guidance (Japan)", category: "regional program"}
+  - {name: "Korea CSAP", category: "regional program"}
+  - {name: "K-ISMS (Korea)", category: "regional program"}
+  - {name: "MTCS Tier 3 (Singapore)", category: "regional program"}
+  - {name: "MAMPU requirements (Malaysia)", category: "regional program"}
+  - {name: "ETDA (Thailand)", category: "regional program"}
+  - {name: "MASA mobile application security certification (Taiwan)", category: "regional program"}
+  - {name: "Indonesia Government Regulation 71 (GR 71)", category: "regional program"}
+  - {name: "Indonesia Government Regulation 95/2018", category: "regional program"}
+  - {name: "MeitY requirements (India)", category: "regional program"}
+  - {name: "Qatar National Information Assurance (NIA)", category: "regional program"}
+  - {name: "Saudi Arabia Class C cloud license", category: "regional program"}
+  - {name: "Canada Protected B", category: "regional program"}
+  - {name: "BSI C5 (Germany)", category: "regional program"}
+  - {name: "gpaNRW (Germany)", category: "regional program"}
+  - {name: "Esquema Nacional de Seguridad (ENS, Spain)", category: "regional program"}
+  - {name: "ACN requirements (Italy)", category: "regional program"}
+  - {name: "Portugal GNS requirements", category: "regional program"}
+  - {name: "NEN standards (Netherlands)", category: "regional program"}
+  - {name: "PiTuKri (Finland)", category: "regional program"}
+  - {name: "UK Cyber Essentials Plus", category: "regional program"}
+  - {name: "UK NCSC Cloud Security Principles", category: "regional program"}
+  - {name: "UK CHECK", category: "regional program"}
+  - {name: "UK Police Assured Secure Facilities (PASF)", category: "regional program"}
+
+tone_and_conventions: >-
+  Write in a confident, factual corporate voice. The provider speaks as "we" or by its
+  own name, and the reader is "customers" or "you". Formality is moderate: plain
+  declarative sentences for a professional audience of security, compliance and
+  procurement reviewers, with no marketing exclamations and no legal drafting
+  formulas. The first time a standard, regulation or concept appears, give its full
+  name with the abbreviation in parentheses (for example a management system, a
+  business associate agreement, protected health information, a data processing
+  addendum) and use the abbreviation afterwards. Give exact versions and levels
+  where they matter (a standard's year, an audit report type, an authorization
+  impact level). Word compliance claims precisely and differently by kind:
+  "certified" or "holds certification" only for formal certifications issued after
+  an independent audit; "attested" or "has received a report" for audit reports;
+  "authorized" for government authorizations; "assessed by an independent assessor"
+  for assessments; "aligned with", "adheres to", "abides by" or "maps its controls
+  to" for laws and frameworks that have no certification; "can be configured for" or
+  "supports customers' compliance with" when the obligation rests with the customer.
+  State plainly when no official certification exists for a regulation and say what
+  assurance is offered instead. Hedge customer benefits ("can help", "may relieve",
+  "is designed to support") and never guarantee a customer's own compliance. Remind
+  readers that responsibility is shared and that customers must assess and configure
+  their own use. Name the assessor type (independent third-party auditor, certified
+  public accounting firm, registered assessor) without naming firms. When
+  describing scope, list the covered products, services, plans or regions, and note
+  that coverage can differ between programs. Use short bulleted lists for enumerations
+  such as products in scope, control domains, governance steps or available
+  resources, and continuous prose for explanation. Tables are rare and used only for
+  structured records such as revision history. ALL CAPS is not used, apart from
+  abbreviations. Include concrete dates: a document publication date, certificate
+  issue dates, audit coverage periods (such as a twelve-month period followed by a
+  bridge letter) and revision dates. Reports and certificates are described as
+  available on request, through self-service access after verification, or after
+  accepting confidentiality terms, and other material is referred to generically as
+  companion documents or as compliance documentation available on request. Refer to
+  other parts of the same document in plain words (for example "described below" or
+  "the following sections"). Close long-form documents with a notice that the content
+  is informational, may change without notice, creates no warranties or commitments
+  and does not modify customer agreements.
+
+typical_length:
+  section_words: [29, 127]
+
+sources:
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/welcome.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/introduction.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/shared-responsibility-model.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/evaluating-and-integrating-aws-controls.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/aws-risk-and-compliance-program.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/customer-cloud-compliance-governance.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/conclusion.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/contributors.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/further-reading.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/document-revisions.html"
+  - "https://docs.aws.amazon.com/whitepapers/latest/aws-risk-and-compliance/notices.html"
+  - "https://www.atlassian.com/trust/compliance/resources"
+  - "https://www.atlassian.com/trust/compliance/compliance-faq"
+  - "https://www.atlassian.com/trust/compliance/resources/soc2"
+  - "https://slack.com/trust/compliance"
+  - "https://slack.com/trust/compliance/ferpa-compliance"
+  - "https://www.zoom.com/en/trust/legal-compliance/"
+  - "https://www.zoom.com/en/trust/legal-compliance/faq/"
+  - "https://www.zoom.com/en/trust/legal-compliance/iso-27001/"
+  - "https://cloud.google.com/security/compliance/offerings"
+  - "https://cloud.google.com/static/security/compliance/offerings/compliance-offerings.json"
+  - "https://cloud.google.com/security/compliance/iso-42001"

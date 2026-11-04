@@ -6,17 +6,14 @@ guide" based on real documents. The style guide is inserted into LLM prompts,
 so it must describe topics and conventions, not copy any real document.
 
 This prompt covers ONE document type:
-- Display name: Terms of Service
-- Slug: `terms_of_service` (use this exact slug in file names and in the
+- Display name: Compliance & Certifications  
+- Slug: `compliance_and_certifications` (use this exact slug in file names and in the
   `document_type` field; it must match the doc type list in my pipeline config)
 
 ## Source documents
 
-- [URL 1]: https://www.anthropic.com/legal/consumer-terms, https://www.anthropic.com/legal/commercial-terms
-- [URL 2]: https://openai.com/policies/row-terms-of-use/, https://openai.com/policies/services-agreement/
-- [URL 3]: https://legal.mistral.ai/terms/eu-consumers-terms-of-service/?lang=en, https://legal.mistral.ai/terms/commercial-terms-of-service/
-- [URL 4]: https://docs.github.com/en/site-policy/github-terms/github-terms-of-service
-- [URL 5]: https://www.atlassian.com/legal/atlassian-customer-agreement#use-of-products
+- [URL 1] : 
+
 
 ---
 
@@ -64,14 +61,7 @@ Do not continue to Stage 2 until I confirm.
 
 # Stage 2: Write the style guide
 
-Before writing, ask me (use AskUserQuestion if available) which rule turns the
-leaf word counts into `typical_length.section_words`. Do not mark any option as
-recommended. Options:
-- **25th–75th percentile across all sources**: typical sections only; ignores
-  very short definitions and very long clauses
-- **Median ± a percentage I choose**: tight, predictable target; less variety
-- **Min–max across all sources**: full realistic spread; lets very short
-  sections pass my pipeline's word-count check
+Set typical_length.section_words to the 25th–75th percentile of leaf-section word counts across all sources, rounded to integers.
 
 Then, using ONLY the saved Markdown files and `_measurements.json`, write
 `style_guides/terms_of_service.yaml`:
@@ -93,7 +83,7 @@ optional_topics:
 tone_and_conventions: "..."
 typical_length:
   section_words: [min, max]   # words per leaf section, integers
-sources: "url from which html was scraped"
+sources: YAML list of the URL's
 ```
 
 ## Rules
@@ -102,18 +92,32 @@ sources: "url from which html was scraped"
 - Each top-level section in the sources maps to a topic. Where sources have
   sections with similar names or similar content, merge them into one topic
   with a generic name and description written by you.
+- **Folding and counting**: when sections with similar names or similar
+  subject matter are folded into one topic, count the folded topic once per
+  source document that contains ANY of its origin sections (top-level section
+  or an equivalent subsection). Report the folded count next to the counts of
+  the origin sections it was built from, so the effect of folding is visible.
 - Former subsections become **content points**: short phrases of a few words,
   not sentences and not nested sections.
-- A topic is **core** if it appears in at least half of the source documents;
-  otherwise it goes to `optional_topics`. The same rule applies to content
-  points: mark rare content points inside a core topic with "(optional)",
-  unless they are substantial enough to be their own optional topic.
+- **Core vs optional** (guideline, not a strict condition): appearing in at
+  least half of the source documents (using the folded count) is the default
+  signal for **core**, but it is not required. A topic may also be core when
+  it is a standard part of this document type, appears widely as subsections,
+  or is needed for a complete document of this type. Once you conclude a topic
+  is core, keep it core; do not demote it later only because it falls below
+  half. Topics that are rare and specific to one audience, region or product
+  model go to `optional_topics`. Content points follow the same guideline:
+  mark rare content points inside a core topic with "(optional)", unless they
+  are substantial enough to be their own optional topic.
+- In the chat report, give a **topic frequency table**:
+  `topic | core/optional | folded count | origin sections (count each)` and
+  name every topic made core below the half threshold, with the reason.
 - Order `core_topics` in the most common order found in the sources.
 - Coverage: every content section in the sources must map to a topic or content
   point. Do not drop real content. Do not add topics that are not in the sources.
 
 **No real companies and no source commentary**
-- No company, product or service names anywhere in the file.
+- No company, product or service names anywhere in the file, except in the sections sources that will have the urls from which the html was scraped
 - No commentary about the sources ("three of five sources", "one document...").
 - `scope`: describe the document type generically, including how real documents
   of this type differ (e.g. consumer vs business, AI-model provider vs

@@ -12,13 +12,19 @@ A 5-phase RAG system that helps software whitelisting teams check AI tools' lega
 4. **Agentic RAG:** Phase 2 chatbot + retrieval tool, quoted citations, summarization at 60–70% of the context limit
 5. **Evaluation:** golden dataset + DeepEval/TruLens metrics across configurations
 
-Current state: Phase 1 is designed (`phase1_design.md`); no code exists yet.
+Current state: Phase 1 is designed (`phase1_design.md`) and planned (`IMPLEMENTATION_PLAN.md`). The bootstrap (layout, config, requirements, style guides) exists; no feature code yet. Next is F1 `feat/config-loading`.
+
+## Open issue: section model and strict structured outputs
+
+OpenRouter lists `google/gemma-4-31b-it:free` (`models.section`) without `structured_outputs`, so it may not enforce strict `json_schema`, which the spec requires and design D2 assumed. Only the paid `google/gemma-4-31b-it` lists it (checked 2026-11-04 via `https://openrouter.ai/api/v1/models`). `nvidia/nemotron-3.5-super-vl:free` does list it. Decision: keep the `:free` ID during bootstrap and the features with no API calls. **Before the first API-calling feature (F7 `feat/llm-client`) starts**, switch `models.section` to the paid version and adapt the code and plan. This changes D2/D30, so update `phase1_design.md` (Decisions + Changelog).
 
 ## Key documents
 
 - `rag_htec_project_specification.md`: the assignment (source of truth for requirements)
 - `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D38), open questions
-- `Yaml_file_generator_prompt.txt`: prompt for building `style_guides/*.yaml` from real public documents
+- `IMPLEMENTATION_PLAN.md`: bootstrap commits, feature branches F1–F13 with steps and done criteria, open questions
+- `Yaml_file_generator_prompt.md`: prompt for building `style_guides/*.yaml` from real public documents
+- `YAML_generator_compliance_and_certifications.md`: variant of that prompt for Compliance & Certifications
 
 When a design decision changes, update `phase1_design.md` (Decisions table and Changelog) together with the code.
 
@@ -26,8 +32,8 @@ When a design decision changes, update `phase1_design.md` (Decisions table and C
 
 - Python 3.11+
 - LLM access through OpenRouter's OpenAI-compatible chat completions API (`https://openrouter.ai/api/v1`); key in `OPENROUTER_API_KEY`
-- Phase 1 models: Nemotron (reasoning: ideation, TOC, judge) and Gemma (cost-effective: sections). Exact model IDs are still an open question in the design doc
-- `html5lib` for HTML validation
+- Phase 1 models: `nvidia/nemotron-3.5-super-vl:free` (reasoning: ideation, TOC, judge) and `google/gemma-4-31b-it:free` (cost-effective: sections; see the open issue above)
+- `requests` (OpenRouter client), `html5lib` (HTML validation), `PyYAML`, `python-dotenv`, `pytest`; pinned in `requirements.txt`
 
 ## Rules from the specification
 
@@ -57,19 +63,30 @@ The spec says submissions must not look entirely copilot-generated and must refl
 
 ```
 config.yaml
+requirements.txt
+generate.py       # entry point: python generate.py config.yaml
+validate.py       # standalone validator: python validate.py data/
+phase1/           # one module per design §4 group (config, llm, ideation, planning, toc, ...)
+tests/            # pytest tests and fixtures, no API calls
 prompts/          # tool_ideation, toc, section, repair, judge (.yaml)
-style_guides/     # one YAML per document type
+style_guides/     # one YAML per document type (sources/ is not committed)
 data/toolN/       # tool.json, toc_*.json, *.html, meta_*.json
 .cache/           # per-section resume cache (not committed)
 logs/             # run logs and summaries (not committed)
-validate.py       # standalone validator: python validate.py data/
 ```
 
 Layout for phases 2–5 is not decided yet.
 
 ## Commands
 
-None yet. Add setup, run, validate, and test commands here as they are implemented.
+```bash
+python3.11 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env              # set OPENROUTER_API_KEY
+python -m pytest                  # tests, no API calls
+```
+
+Add the run and validate commands here once `generate.py` and `validate.py` are implemented.
 
 ## Git
 

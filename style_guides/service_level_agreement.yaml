@@ -1,0 +1,180 @@
+document_type: service_level_agreement
+purpose: >-
+  States the measurable availability level a cloud or AI service provider commits
+  to (or aims for) for its paying business customers, and the service credits a
+  customer can claim when that level is missed. It sits alongside, and is
+  subordinate to, the main customer agreement between provider and customer.
+scope: >-
+  Covers the availability target for each covered service or plan tier, how
+  uptime and downtime are measured, the credit schedule tied to uptime bands,
+  how and when a customer must claim credits, caps and form of credits,
+  exclusions from the commitment, and the rule that credits are the sole remedy.
+  It normally excludes pricing, general liability, data protection, acceptable
+  use and other contract terms, which remain in the governing agreement and
+  companion documents. Real documents differ in several ways: a firm
+  "commitment" backed by commercially reasonable efforts versus a softer
+  "objective"; monthly versus quarterly measurement, per region, per project or
+  per product; a single uniform target versus targets that vary by plan or
+  support tier; a single-service document versus an umbrella document with a
+  per-service catalogue of metrics; AI-model or inference providers that add
+  model-specific exclusions (model crashes, deprecated models, output quality)
+  versus general software platforms that define availability through specific
+  user-facing operations; and documents that are pure uptime schedules versus
+  combined service-level-and-support schedules that also set incident response
+  and resolution times. Some address purchases through resellers or partners,
+  and some reserve a right to amend the document with an objection mechanism.
+core_topics:
+  - name: "Scope and relationship to the governing agreement"
+    description: "Introduces the document, identifies the covered offering and customers, and ties it to the main customer agreement."
+    content_points:
+      - "covered offering and eligible customers"
+      - "applies per account, project or deployment"
+      - "only provider-hosted portion covered (optional)"
+      - "precedence over main agreement on conflicts"
+      - "undefined capitalized terms from governing agreement"
+      - "effective or last-updated date"
+      - "pointer to public status reporting (optional)"
+  - name: "Service level commitment"
+    description: "Sets the uptime percentage the provider commits to or targets for each covered service, plan or tier during each measurement period."
+    content_points:
+      - "commitment versus objective wording"
+      - "commercially reasonable efforts standard"
+      - "uptime target table by service, plan or tier"
+      - "measurement period and unit (month, quarter, region, project)"
+      - "subject to exclusions section"
+      - "credit eligibility when target missed"
+      - "availability report access for customer (optional)"
+  - name: "Service credits"
+    description: "Defines the credit schedule by uptime band and the rules on how credits are calculated, applied, limited and forfeited."
+    content_points:
+      - "tiered credit table by uptime band"
+      - "credit as percentage of affected service fees"
+      - "different schedules per plan or support tier"
+      - "applied against future invoices or usage"
+      - "no cash value, refund or transfer"
+      - "maximum credit per billing period"
+      - "account must be fully paid"
+      - "issuance timeframe after approval"
+      - "minimum credit amount threshold (optional)"
+      - "reimbursement when no further invoices (optional)"
+      - "credits expire on termination (optional)"
+      - "reseller or partner purchases credited via the reseller (optional)"
+  - name: "Credit request procedure"
+    description: "Explains how, where and by when the customer must submit a credit claim and what evidence it must include."
+    content_points:
+      - "claim deadline after incident or period"
+      - "submission through support case or ticket"
+      - "required details: dates, times, affected services"
+      - "supporting request logs or identifiers"
+      - "redaction of sensitive data in logs"
+      - "fixed subject line for claims (optional)"
+      - "provider monitoring as authoritative record"
+      - "provider confirmation before credit"
+      - "forfeiture for incomplete or late claims"
+      - "separate channel for partner-channel purchases (optional)"
+  - name: "Exclusions"
+    description: "Lists the circumstances in which unavailability or performance issues do not count against the commitment or entitle the customer to credits."
+    content_points:
+      - "force majeure and factors beyond reasonable control"
+      - "internet and network problems outside provider boundary"
+      - "customer equipment, software, data or configuration"
+      - "third-party products and services"
+      - "customer breach, misuse or unauthorized use"
+      - "preview, beta, free or sandbox offerings"
+      - "features excluded in documentation"
+      - "scheduled or emergency maintenance with notice"
+      - "suspension or termination under the agreement"
+      - "quotas, throttling and rate limits"
+      - "use contrary to documentation or invalid requests"
+      - "compromised credentials or poor security practices (optional)"
+      - "latency or degradation without actual unavailability (optional)"
+      - "continued use after provider advice to change it (optional)"
+      - "model crashes or models past supported lifespan (optional)"
+      - "discretionary credit for other impact factors (optional)"
+  - name: "Exclusive remedy"
+    description: "Confirms that service credits are the customer's sole and exclusive remedy and the provider's entire liability for missing the service level."
+    content_points:
+      - "credits as sole and exclusive remedy"
+      - "provider's entire liability for service level failures"
+      - "unless governing agreement says otherwise"
+  - name: "Definitions and uptime calculation"
+    description: "Defines the measurement terms and explains how uptime percentage is computed from errors or downtime over the period."
+    content_points:
+      - "availability, downtime and downtime period"
+      - "error rate and error threshold per interval"
+      - "request and valid request"
+      - "monthly or periodic uptime percentage formula"
+      - "measurement interval granularity"
+      - "minimum downtime duration counted"
+      - "scheduled downtime and its notice period"
+      - "applicable period and applicable fees"
+      - "intervals with no requests treated as available"
+      - "client back-off requirements for retries (optional)"
+      - "time zone for calendar months (optional)"
+      - "worked calculation example (optional)"
+optional_topics:
+  - name: "Covered services and service-specific metrics"
+    description: "Catalogues each covered service or product and the operations, downtime definition and uptime formula specific to it."
+    content_points:
+      - "list of eligible services or products"
+      - "covered user-facing operations per product"
+      - "service-specific downtime definitions"
+      - "per-service uptime formulas"
+      - "browser-only or hosted-only coverage notes"
+      - "services governed by separate agreements"
+  - name: "Support services and incident response"
+    description: "Sets out the support service, incident priority levels and response and resolution targets for each support tier."
+    content_points:
+      - "initial response time and resolution time definitions"
+      - "support request channel"
+      - "provider determines final priority"
+      - "minimum information for support requests"
+      - "customer anonymizes sensitive data"
+      - "response and resolution matrix by tier and priority"
+      - "coverage hours per priority"
+      - "priority level descriptions by impact"
+      - "best-efforts handling for lower priorities"
+      - "no support obligation for output inaccuracies"
+  - name: "Changes to the service level terms"
+    description: "Reserves the provider's right to amend the document and gives the customer a way to object to materially adverse changes."
+    content_points:
+      - "provider right to update"
+      - "objection window for material adverse change"
+      - "prior version continues until term end or time cap"
+tone_and_conventions: >-
+  Write as a formal, concise commercial contract schedule between a provider and
+  a business customer. Use either third person with capitalized party labels
+  ("Customer" and the provider's name) or a direct "we"/"you" voice, and keep
+  the chosen voice consistent throughout. Obligations use "will", "must" and
+  "shall"; permissions use "may"; provider discretion is stated plainly ("at its
+  discretion", "in its reasonable discretion"). Defined terms are capitalized and
+  introduced in quotation marks, either inline in parentheses after the phrase
+  they name (the "Service Commitment") or in a definitions list where each entry
+  opens with the quoted term followed by "means" or "is". Terms not defined in
+  the document take their meaning from the governing agreement, which is
+  referred to simply as the "Agreement". Cross-references point to other parts
+  of the same document by section number and title in parentheses or by
+  appendix name, and to other materials only generically as the Agreement, the
+  Documentation or companion documents. Prose paragraphs dominate; use short
+  bulleted or lettered lists for definitions, claim contents and exclusions, and
+  inline enumerations such as (a), (b) or (i), (ii) for shorter series. Present
+  uptime targets, credit schedules by uptime band and support response matrices
+  as compact tables with clear column headers, using comparison phrasing such as
+  "less than X% but greater than or equal to Y%" or symbols like ">=" and "<";
+  table footnotes may be marked with asterisks. Write time periods as words with
+  numerals in parentheses ("thirty (30) days") or as plain numerals, and keep
+  percentages numeric. A short worked example of the uptime calculation may be
+  given as a bulleted sequence. ALL CAPS is not used for emphasis or disclaimers;
+  bold is limited to defined terms and short run-in labels. The document carries
+  an effective, last-updated or version date line, and product catalogues or
+  credit schedules may be placed in appendices at the end. Keep each section
+  focused and self-contained, avoid marketing language, and do not explain the
+  law.
+typical_length:
+  section_words: [54, 156]
+sources:
+  - "https://aws.amazon.com/bedrock/sla/"
+  - "https://cloud.google.com/vertex-ai/sla"
+  - "https://legal.mistral.ai/terms/enterprise-service-level-and-support-schedule/"
+  - "https://github.com/customer-terms/github-online-services-sla"
+  - "https://www.atlassian.com/legal/sla"

@@ -1,0 +1,247 @@
+document_type: data_processing_agreement
+purpose: "Sets out the binding terms under which a software or AI service provider processes personal data on behalf of its business customer, so that both parties meet their controller and processor obligations under applicable data protection laws. It is concluded between the provider and the business or enterprise customer and is incorporated into their main service agreement."
+scope: >-
+  Covers personal data that the business customer, its affiliates or its end users submit to the provider's
+  services and that the provider processes as a processor (or sub-processor) for the customer. It typically
+  addresses roles, documented instructions, confidentiality, security, breach notification, sub-processors,
+  data subject and regulator assistance, audits, international transfers, return and deletion, and
+  jurisdiction-specific privacy law terms, with annexes describing the processing and the security measures.
+  It excludes the provider's own processing as an independent controller (account management, billing,
+  abuse prevention, aggregated statistics and, for some AI providers, model training), which is carved out
+  and left to the provider's privacy notice, and it defers commercial terms such as fees, liability caps
+  and governing law to the main agreement. Documents differ mainly in three ways. AI model providers tend to
+  be compact and add carve-outs for model training (with customer opt-out), automated moderation and
+  feedback data, while developer and collaboration platforms are longer and more detailed, cover
+  professional services, sector-specific data and authorised affiliates, and attach a full security
+  measures table. EU-first documents are organised around the European framework, treat transfers outside
+  Europe as the exception and may conclude a provider-to-customer transfer module for customers outside
+  Europe, while US-first documents rely on transfer frameworks and incorporated standard clauses, name a
+  local establishment for European data and give prominent space to US state privacy law commitments.
+  Finally, some keep everything in one global text while others move transfer mechanisms and
+  country-specific terms into a region-specific schedule covering further jurisdictions.
+core_topics:
+  - name: "Scope, Incorporation and Order of Precedence"
+    description: "Explains how the agreement attaches to the main service agreement, which services and data it covers, how long it lasts and which document prevails in a conflict."
+    content_points:
+      - "incorporation into the main service agreement"
+      - "services and data in scope"
+      - "excluded preview or separately governed services (optional)"
+      - "term coterminous with the main agreement"
+      - "order of precedence and conflict resolution"
+      - "liability subject to the main agreement's limits"
+  - name: "Definitions"
+    description: "Defines the capitalised terms used throughout, either by stand-alone definitions or by reference to the meaning given in data protection law."
+    content_points:
+      - "applicable data protection laws"
+      - "customer data and customer personal data"
+      - "controller, processor, data subject, processing"
+      - "personal data breach or security incident"
+      - "sub-processor and sub-processor list"
+      - "standard contractual clauses and transfer addenda"
+      - "US state privacy law terms"
+      - "region-specific definitions in a schedule (optional)"
+  - name: "Roles of the Parties and Scope of Processing"
+    description: "Allocates the controller and processor roles and identifies where the details and purposes of the processing are recorded."
+    content_points:
+      - "customer as controller, provider as processor"
+      - "customer acting as processor, provider as sub-processor"
+      - "processing limited to providing the services"
+      - "details of processing recorded in an annex"
+      - "provider processing as independent controller"
+      - "model training on customer data unless opted out (optional)"
+      - "use of de-identified and aggregated data"
+      - "excluded uses such as profiling or advertising (optional)"
+  - name: "Processing Instructions and Provider Obligations"
+    description: "Commits the provider to process personal data only on the customer's documented instructions and sets out its general processor duties."
+    content_points:
+      - "agreement, configuration and settings as documented instructions"
+      - "processing required by law and prior notice"
+      - "notice where an instruction appears unlawful"
+      - "additional instructions agreed in writing"
+      - "personnel confidentiality obligations"
+      - "notice if the provider can no longer comply"
+  - name: "Customer Obligations"
+    description: "Sets out the customer's own responsibilities for the lawfulness of the processing and the way it uses and configures the services."
+    content_points:
+      - "lawful instructions and own legal compliance"
+      - "notices, consents and authorisations obtained"
+      - "suitability of the services for the customer's data"
+      - "customer-controlled configuration, retention and security"
+      - "cooperation with the provider"
+  - name: "Data Subject Requests and Compliance Assistance"
+    description: "Describes how requests from individuals are handled and how the provider helps the customer meet its own data protection obligations."
+    content_points:
+      - "forwarding or redirecting requests to the customer"
+      - "no direct response without customer authorisation"
+      - "self-service tools and reasonable assistance"
+      - "customer responsibility for responding"
+      - "impact assessments and regulator consultations"
+  - name: "Government and Third-Party Access Requests"
+    description: "Governs how the provider responds when a public authority or other third party seeks disclosure of customer personal data."
+    content_points:
+      - "disclosure only as instructed or legally required"
+      - "redirecting the requester to the customer"
+      - "notice to the customer unless legally prohibited"
+      - "challenging overbroad or unlawful orders"
+  - name: "Security Measures"
+    description: "Obliges the provider to implement and maintain appropriate technical and organisational measures and defines the customer's share of security responsibility."
+    content_points:
+      - "risk-based measures reflecting state of the art and cost"
+      - "confidentiality, integrity, availability and resilience"
+      - "measures detailed in a security annex"
+      - "provider may update measures without lowering protection"
+      - "customer responsibility for its own account security"
+  - name: "Personal Data Breach Notification"
+    description: "Sets the provider's duties to notify, investigate and mitigate security incidents affecting customer personal data and to support the customer's own notifications."
+    content_points:
+      - "notice without undue delay or within a stated number of hours"
+      - "content of the notification and staged updates"
+      - "investigation, mitigation and remediation"
+      - "assistance with regulator and individual notifications"
+      - "notification not an admission of fault"
+      - "customer duty to report account misuse (optional)"
+  - name: "Sub-processors"
+    description: "Authorises the provider to engage sub-processors and sets the conditions for their selection, disclosure, change and oversight."
+    content_points:
+      - "general written authorisation"
+      - "published and maintained sub-processor list"
+      - "advance notice of new sub-processors and subscription"
+      - "objection right and termination remedy"
+      - "flow-down of equivalent data protection terms"
+      - "provider liability for sub-processors"
+  - name: "Audits and Compliance Verification"
+    description: "Lets the customer verify the provider's compliance, primarily through independent reports and information and, as a last resort, through an audit or inspection."
+    content_points:
+      - "independent audit reports and certifications"
+      - "information requests limited in frequency"
+      - "on-site audit only where reports are insufficient"
+      - "notice, scope, auditor and confidentiality conditions"
+      - "audit costs borne by the customer"
+      - "regulator-mandated audits"
+  - name: "International Data Transfers"
+    description: "Authorises transfers of personal data outside its origin region and sets out the transfer mechanisms and clause elections that apply."
+    content_points:
+      - "authorisation to transfer to provider and sub-processor locations"
+      - "adequacy decisions"
+      - "standard contractual clauses incorporated by reference"
+      - "module selection by party role"
+      - "clause elections: docking, redress, governing law, forum"
+      - "UK addendum"
+      - "Swiss adaptations"
+      - "transfer frameworks and certifications"
+      - "transfer impact assessment support"
+      - "designated local entity for regional data (optional)"
+      - "provider-to-customer module for customers outside the region (optional)"
+      - "supplementary safeguards against government access (optional)"
+  - name: "Return and Deletion of Personal Data"
+    description: "Sets out what happens to customer personal data at the end of the services, including export, deletion and legally required retention."
+    content_points:
+      - "customer access, export and deletion during the term"
+      - "return or deletion after termination at customer's election"
+      - "deletion period and loss of access"
+      - "retention required by law, isolated and protected"
+  - name: "US State Privacy Law Terms"
+    description: "Adds service-provider commitments required by US state privacy laws where they apply to the processing."
+    content_points:
+      - "no sale or sharing of personal information"
+      - "no use outside the direct business relationship"
+      - "no combining with other data"
+      - "notice if obligations can no longer be met"
+      - "customer right to stop and remediate unauthorised use"
+      - "de-identified data commitments"
+  - name: "Description of Processing"
+    description: "An annex recording the parties and the particulars of the processing and transfers, structured to complete the standard transfer clauses."
+    content_points:
+      - "list of parties, exporter and importer, contact details"
+      - "categories of data subjects"
+      - "categories of personal data"
+      - "sensitive or special category data and safeguards"
+      - "frequency of transfer"
+      - "nature and purpose of processing"
+      - "duration and retention period"
+      - "transfers to sub-processors"
+      - "competent supervisory authority"
+      - "provider may update the description (optional)"
+  - name: "Technical and Organisational Measures"
+    description: "An annex describing the provider's security programme and controls, either in full or by pointing to a companion security document."
+    content_points:
+      - "security programme, ownership and policies"
+      - "certifications and independent assessments"
+      - "access control, least privilege and multi-factor authentication"
+      - "personnel screening, confidentiality and training"
+      - "encryption in transit and at rest"
+      - "endpoint protection and vulnerability management"
+      - "logging, monitoring and incident response"
+      - "logical data segregation and asset management"
+      - "business continuity and data recovery"
+      - "physical and environmental security"
+      - "vendor risk management"
+      - "domain-by-practice controls table (optional)"
+optional_topics:
+  - name: "Authorised Affiliates"
+    description: "Extends the agreement to the customer's affiliates while keeping the exercise of rights, communications and liability with the contracting customer."
+    content_points:
+      - "affiliates covered as additional controllers"
+      - "rights exercised only by the contracting customer"
+      - "customer coordinates all communications"
+      - "aggregate liability across affiliates"
+  - name: "Regulated and Sector-Specific Data"
+    description: "Addresses categories of data subject to sector rules, either by adding obligations or by prohibiting such data without the provider's prior consent."
+    content_points:
+      - "educational records and school-official status"
+      - "health information requiring a separate agreement"
+      - "criminal justice and biometric data"
+      - "clinical research data"
+      - "prior written consent requirement"
+  - name: "Other Jurisdiction-Specific Terms"
+    description: "Supplementary terms for further countries outside the European and US frameworks, typically placed in a region-specific schedule."
+    content_points:
+      - "customer consents under the local privacy law"
+      - "local handling rules for de-identified data"
+      - "local standard transfer clauses and elections"
+      - "local definitions"
+  - name: "Notices and Remedy for Breach of the Agreement"
+    description: "Specifies how notices under the agreement are given and how alleged non-compliance is raised and cured."
+    content_points:
+      - "notice channels to the provider"
+      - "notice to customer administrators"
+      - "customer duty to keep contact details current"
+      - "written notice and cure period"
+tone_and_conventions: >-
+  Write as formal, operative contract language between a provider and a business customer, in the third
+  person ("Customer" and the provider's defined name or role); a second-person variant ("You" for the
+  customer, "we" for the provider) is acceptable if used consistently. Use "will" or "must" for
+  obligations, "may" for permissions and "shall" sparingly and consistently, and do not mix in
+  promotional or explanatory language. Capitalise defined terms (Customer, Agreement, Services, Customer
+  Personal Data, Sub-processor, Security Incident, Applicable Data Protection Law) and use them exactly as
+  defined; a definitions section states each term in quotation marks followed by "means" or "has the
+  meaning given in", and terms taken from data protection law (controller, processor, data subject,
+  processing) are defined by reference to that law. Qualify duties with the standard regulatory phrases:
+  "taking into account the nature of the processing and the information available", "without undue
+  delay", "to the extent required by Applicable Data Protection Law", "unless prohibited by law",
+  "reasonable" or "commercially reasonable" assistance. Express time limits and frequencies precisely,
+  writing numbers as words with digits in parentheses (for example "thirty (30) days"), and state who
+  bears costs. Keep provider-protective limits explicit: assistance at the customer's request and
+  expense, audits limited in frequency and subject to confidentiality, termination as the sole remedy for
+  an objection, liability subject to the main agreement. Cross-reference other provisions by their section
+  reference followed by the title in parentheses, refer to annexes, schedules and exhibits by name, and
+  point to companion documents (the main service agreement, the privacy notice, the sub-processor list,
+  the security documentation) generically rather than repeating them. Structure most provisions as short
+  numbered clauses in prose, with inline enumerations marked (a), (b), (c) or (i), (ii), (iii); use
+  bulleted lists for conditions, notification contents and lists of measures. Annexes that complete
+  standard transfer clauses use "label: value" lines (categories of data subjects, frequency, duration),
+  and a two-column domain-and-practices table is acceptable for security measures; other tables are rare.
+  ALL CAPS is not used for disclaimers and appears at most in annex labels for transfer module names.
+  Transfer provisions name the clause modules and elections plainly rather than reproducing the clause
+  text. The document carries an effective date at the top (and may note a version or update date),
+  states that it is incorporated into the main agreement, and places the description of processing,
+  security measures, transfer elections, sub-processor reference and region-specific terms in addenda at
+  the end.
+typical_length:
+  section_words: [45, 165]
+sources: >-
+  https://openai.com/policies/data-processing-addendum/,
+  https://www.anthropic.com/legal/data-processing-addendum,
+  https://legal.mistral.ai/terms/data-processing-addendum/,
+  https://github.com/customer-terms/github-data-protection-agreement,
+  https://www.atlassian.com/legal/data-processing-addendum

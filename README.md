@@ -20,7 +20,7 @@ The project is built incrementally in five phases.
 
 | Phase | Status |
 |---|---|
-| 1 – Data generation | Design done (`phase1_design.md`), implementation not started |
+| 1 – Data generation | Design and implementation plan done, implementation not started |
 | 2 – Chatbot | Not started |
 | 3 – Ingestion & search | Not started |
 | 4 – Agentic RAG | Not started |
@@ -53,16 +53,26 @@ See [`phase1_design.md`](phase1_design.md) for the full design.
 Requires Python 3.11+.
 
 ```bash
-python -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt     # added once implementation starts
-export OPENROUTER_API_KEY=...
+pip install -r requirements.txt
+cp .env.example .env                # then set OPENROUTER_API_KEY in .env
 ```
 
-Run instructions for each phase will be added as the phases are implemented.
+## Usage
+
+```bash
+python -m pytest                    # run the tests (no API calls)
+python generate.py config.yaml      # generate the dataset (not implemented yet)
+python validate.py data/            # validate generated files (not implemented yet)
+```
+
+`generate.py` resumes where it stopped, so a run interrupted by a rate limit can be restarted with the same command.
 
 ## Documents
 
 - [`rag_htec_project_specification.md`](rag_htec_project_specification.md): full assignment specification
 - [`phase1_design.md`](phase1_design.md): Phase 1 design, decisions, and open questions
-- [`Yaml_file_generator_prompt.txt`](Yaml_file_generator_prompt.txt): prompt used to build the per-document-type style guides from real public documents
+- [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md): Phase 1 bootstrap, feature branches, and order of work
+- [`Yaml_file_generator_prompt.md`](Yaml_file_generator_prompt.md): prompt used to build the per-document-type style guides from real public documents
+- [`YAML_generator_compliance_and_certifications.md`](YAML_generator_compliance_and_certifications.md): variant of that prompt for Compliance & Certifications, whose sources are spread over many pages

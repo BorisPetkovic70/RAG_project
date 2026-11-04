@@ -1,0 +1,170 @@
+document_type: privacy_policy
+purpose: "Tells individual users and website visitors how a software or AI service provider, acting as data controller, collects, uses, shares, retains and protects their personal data, and what rights and choices they have over it."
+scope: >-
+  Covers the provider's own websites, apps and services where it acts as data controller for individual
+  users and visitors. Explicitly excludes personal data processed on behalf of business, enterprise or API
+  customers (where the provider is a processor and the customer agreement governs), and usually points to
+  separate notices for adjacent topics such as non-user training data, consumer health data, cookies, job
+  applicants, former employees and region-specific versions. Documents differ mainly by provider type and
+  jurisdictional framing: AI model or assistant providers give dedicated treatment to prompts and outputs,
+  model training on user content and public web data, training opt-outs and output accuracy, while
+  developer or collaboration platforms emphasise broader commercial processing (marketing, partners and
+  resellers, professional services) and often embed full cookie and U.S. state notices. EU-first documents
+  are GDPR-led and treat transfers outside the EU as exceptions; US-first documents add an EU establishment
+  as controller for European users, rely on transfer frameworks, and may omit a legal-bases section in
+  non-European versions. Some add supplements for further countries, and the stated minimum user age varies
+  (commonly 13, 16 or 18, or not stated).
+core_topics:
+  - name: "Introduction and Scope"
+    description: "Opening statement identifying the provider, the services covered, the effective date and the boundaries of the policy."
+    content_points:
+      - "services and persons covered"
+      - "effective date"
+      - "business-customer processing excluded (processor role)"
+      - "related notices and regional versions"
+  - name: "Personal Data Collected"
+    description: "Catalogues the categories of personal data collected, grouped by how the provider obtains them."
+    content_points:
+      - "data provided directly (account, payment, inputs, feedback, verification)"
+      - "automatically collected technical and cookie data"
+      - "data from third parties and public sources"
+      - "sources of AI training data (optional)"
+  - name: "Cookies and Tracking Technologies"
+    description: "A dedicated cookie notice, or a short section pointing to a separate cookie policy, explaining tracking technologies and user controls."
+    content_points:
+      - "what cookies and similar technologies are"
+      - "session versus persistent cookies"
+      - "cookie purposes and categories table"
+      - "cookie choices, browser signals and ad opt-outs"
+  - name: "How Personal Data Is Used"
+    description: "Sets out the purposes for which collected data is processed, including product improvement and model training."
+    content_points:
+      - "processing purposes (service, account, payments, communications, support, safety, legal)"
+      - "content used for model training, with opt-out"
+      - "aggregated and de-identified data, no re-identification"
+  - name: "Legal Bases for Processing"
+    description: "Identifies the lawful grounds relied on for each processing activity, typically framed for EEA/UK data protection law."
+    content_points:
+      - "bases relied on (contract, legal obligation, legitimate interests, consent, research)"
+      - "withdrawal of consent"
+      - "purpose-to-legal-basis table"
+  - name: "How Personal Data Is Shared"
+    description: "Lists the categories of recipients to whom personal data is disclosed and the circumstances of disclosure."
+    content_points:
+      - "service providers and processors (subprocessor list)"
+      - "affiliates and need-to-know internal access"
+      - "legal, regulatory and safety disclosures"
+      - "business transfers"
+      - "organization account administrators"
+      - "third-party integrations, other users and the public"
+      - "partners and resellers (optional)"
+      - "disclosure with consent or at user direction (optional)"
+      - "provider access to private content (optional)"
+  - name: "Data Retention"
+    description: "Explains how long personal data is kept and what happens when it is no longer needed."
+    content_points:
+      - "retention principles, criteria and end-of-life deletion"
+      - "retention periods by data category"
+      - "extended retention for legal, safety or security reasons"
+  - name: "Rights and Choices"
+    description: "Describes individuals' privacy rights, the tools for controlling their data, and how to make requests."
+    content_points:
+      - "catalogue of rights, including automated decisions"
+      - "exercising rights (channels, verification, agents, timelines)"
+      - "self-service privacy controls and opt-outs"
+      - "limits for AI outputs and trained models (optional)"
+      - "complaints to a supervisory authority"
+  - name: "International Data Transfers"
+    description: "Explains where personal data is stored and processed and how cross-border transfers are protected."
+    content_points:
+      - "processing locations"
+      - "transfer safeguards (adequacy, standard contractual clauses, derogations)"
+  - name: "Data Security"
+    description: "Summarises the technical, administrative, physical and organisational safeguards protecting personal data."
+    content_points:
+      - "security measures and vendor vetting"
+      - "limits of security (optional)"
+  - name: "Children's Privacy"
+    description: "States the minimum age for the services and how children's data is handled."
+    content_points:
+      - "minimum age, no knowing collection"
+      - "reporting and removal of children's data"
+      - "parent or guardian account linking (optional)"
+  - name: "Regional and Jurisdiction-Specific Disclosures"
+    description: "Supplementary disclosures for particular jurisdictions, presented as addenda that supplement or override the main policy for residents there, most commonly a U.S. state privacy notice."
+    content_points:
+      - "U.S. state categories collected, used and disclosed"
+      - "sale, sharing and targeted advertising"
+      - "U.S. state privacy rights"
+      - "requests, verification, authorized agents and appeals"
+      - "sensitive personal information"
+  - name: "Changes to This Policy"
+    description: "Explains that the policy may be updated, how updates are published and how material changes are notified."
+    content_points:
+      - "publication of updates"
+      - "notice of material changes"
+  - name: "Data Controller and Contact Information"
+    description: "Identifies the legal entities responsible for the data and how to reach them."
+    content_points:
+      - "controller identity, possibly by region"
+      - "contact channels and Data Protection Officer"
+      - "local representatives (optional)"
+optional_topics:
+  - name: "Data Privacy Framework Participation"
+    description: "Declares certification under the EU-U.S., UK and Swiss-U.S. transfer frameworks and the accountability and redress mechanisms that come with it."
+    content_points:
+      - "framework certification"
+      - "onward-transfer liability"
+      - "independent dispute resolution and arbitration"
+      - "regulator enforcement powers"
+  - name: "U.S. State-Specific Supplements"
+    description: "Extra items for individual U.S. states beyond the common state privacy notice."
+    content_points:
+      - "California disclosure-request rights"
+      - "minors' content-removal rights"
+      - "profiling opt-out and appeal rights"
+      - "state no-sale statements"
+  - name: "EEA and UK Disclosures"
+    description: "A region-specific block for EEA and UK individuals gathering their legal bases, complaint routes, representatives and transfer mechanisms."
+    content_points:
+      - "legal bases for EEA/UK processing"
+      - "complaint routes"
+      - "EU and UK representatives"
+      - "transfer mechanisms"
+  - name: "Other Country Supplements"
+    description: "Addenda for specific countries outside the U.S. and EEA/UK covering local legal requirements."
+    content_points:
+      - "local consent rules"
+      - "local rights catalogue"
+      - "items collected and retention periods"
+      - "delegated processors"
+      - "overseas transfer details"
+      - "domestic representative"
+  - name: "Privacy Policy Overview"
+    description: "A short bulleted summary of the policy's key points placed before the detailed sections."
+    content_points:
+      - "bulleted key-point summary"
+      - "links to detailed sections"
+tone_and_conventions: >-
+  Formal but plain-language and reader-facing: first person plural for the provider ("we", "us", "our") and
+  second person for the reader ("you"), with frequent hedges such as "may", "where applicable" and "depending
+  on where you live". Defined terms are capitalised and introduced in quotation marks within parentheses on
+  first use (e.g. "Services", "Personal Data", "Content", "Inputs", "Outputs", "Feedback", "Technical
+  Information") and then used consistently. Cross-references point to other parts of the policy by their
+  title, and readers are referred to companion documents (such as a cookie notice, model-training notice or
+  customer agreement) by name rather than by repeating their content. Bulleted lists dominate data
+  categories, purposes, recipients, rights and retention periods, usually as a bold or italic run-in label
+  followed by a one- or two-sentence explanation; short prose paragraphs cover scope, transfers, security,
+  children, changes and contact. Tables are used for purpose/data/legal-basis matrices, U.S. state category
+  disclosures and cookie categories. ALL CAPS is not used for emphasis or disclaimers; emphasis comes from
+  bold labels. The effective date appears at the top of the policy; regional addenda open by stating who
+  they apply to and that they supplement or take precedence over the main policy for those readers; contact
+  details give full postal addresses and dedicated privacy and Data Protection Officer email addresses.
+typical_length:
+  section_words: [52, 200]
+sources:
+  - "https://www.anthropic.com/legal/privacy"
+  - "https://openai.com/policies/row-privacy-policy/"
+  - "https://legal.mistral.ai/terms/privacy-policy/?lang=en"
+  - "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+  - "https://www.atlassian.com/legal/privacy-policy"

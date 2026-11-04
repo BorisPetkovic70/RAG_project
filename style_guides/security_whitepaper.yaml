@@ -1,0 +1,285 @@
+document_type: security_whitepaper
+purpose: "A public, customer-facing explanation of how a software provider protects the systems and customer data behind its service, written to give prospective and existing business customers, their security reviewers and their auditors enough assurance to adopt and keep using the service. It describes the provider's security program and practices; it is informational rather than a contract between the provider and its customers."
+scope: >-
+  Covers the provider's security organization and culture, infrastructure and
+  network protection, day-to-day operational controls, the secure development
+  lifecycle, encryption, tenant isolation and internal access to customer data,
+  how customer data is used, retained and deleted, vulnerability management and
+  security testing, incident response, resilience and backups, oversight of
+  suppliers and subprocessors, compliance certifications and audits, privacy,
+  and the split of security responsibilities between provider and customer.
+  It excludes binding contractual terms (these sit in companion documents such
+  as the customer agreement, data processing addendum and service-specific
+  terms), pricing, and detailed product configuration instructions. Real
+  documents of this type vary along several axes: long-form whitepapers that
+  walk through every control area, versus short trust or landing pages built
+  from headline commitments, versus help-centre articles focused on one
+  feature; infrastructure and cloud-platform providers that emphasize hardware,
+  data centers and global networks, versus application providers that build on
+  a third-party cloud host and emphasize application, tenant and account
+  controls; and providers of AI features or AI models, which add commitments on
+  model training, inference providers, retention of prompts and outputs, and
+  ownership of generated output. Many statements are qualified by plan or tier,
+  with stronger controls reserved for business, enterprise or regulated-sector
+  customers, and some providers add regional data-residency options or
+  sector-specific agreements for health data.
+core_topics:
+  - name: "Introduction and security approach"
+    description: "Opens the document by stating why security matters to the provider, which services the document covers, and the guiding philosophy behind the security program."
+    content_points:
+      - "commitment to customer trust"
+      - "services and offerings in scope"
+      - "security philosophy and core themes"
+      - "defense in depth and zero trust principles"
+      - "provider uses its own products internally (optional)"
+      - "pointer to companion documents"
+  - name: "Security organization, people and culture"
+    description: "Describes who runs the security program, how the security team is structured, and how employees and contractors are vetted, trained and engaged in security."
+    content_points:
+      - "security leadership and reporting line"
+      - "specialized security sub-teams"
+      - "collaboration with the external research community"
+      - "security awareness training at onboarding and annually"
+      - "role-specific and secure-coding training"
+      - "security champions within product teams (optional)"
+      - "background checks where legally permitted"
+      - "dedicated internal audit and compliance specialists"
+      - "program maturity assessments and continuous improvement"
+  - name: "Infrastructure, network and physical security"
+    description: "Explains how the hosting environment, networks, servers, endpoints and physical facilities are designed and protected."
+    content_points:
+      - "hosting model and cloud provider reliance"
+      - "physical data center access controls"
+      - "redundant power and environmental controls (optional)"
+      - "purpose-built server hardware (optional)"
+      - "network segmentation and layered controls"
+      - "restricted production network access"
+      - "zero trust access to internal systems"
+      - "server hardening and firewalls"
+      - "managed and encrypted employee devices"
+      - "personal-device programs with limited access (optional)"
+      - "global network and DDoS protection (optional)"
+      - "office physical security"
+  - name: "Operational security and monitoring"
+    description: "Covers the routine controls that keep the production environment in a known, secure state and the monitoring that surfaces suspicious activity."
+    content_points:
+      - "asset inventory and tracking"
+      - "peer-reviewed change management"
+      - "restricted configuration and software installation"
+      - "centralized logging and log analysis"
+      - "intrusion detection and automated alerting"
+      - "malware prevention"
+      - "round-the-clock security on-call"
+      - "machine-learning-assisted threat detection (optional)"
+  - name: "Secure development lifecycle"
+    description: "Describes how security is built into products from design through release, including review, testing and supply-chain safeguards for code."
+    content_points:
+      - "security requirements from design onward"
+      - "threat modeling"
+      - "mandatory code review and version control"
+      - "automated code and dependency analysis"
+      - "risk-based security reviews of projects"
+      - "memory-safe languages and safe coding practices (optional)"
+      - "software supply chain integrity and binary attestation"
+      - "internal security scorecards and knowledge bases (optional)"
+  - name: "Encryption and key management"
+    description: "States how customer data is encrypted in transit, at rest and, where offered, in use, and how encryption keys are managed."
+    content_points:
+      - "encryption in transit with modern TLS"
+      - "encryption at rest with strong ciphers"
+      - "forward secrecy"
+      - "validated cryptographic modules"
+      - "managed key service and key ownership"
+      - "customer-managed encryption keys"
+      - "post-quantum cryptography readiness (optional)"
+      - "confidential computing for data in use (optional)"
+  - name: "Data isolation and access control"
+    description: "Explains how one customer's data is kept separate from others and how provider staff and systems are restricted in accessing customer data."
+    content_points:
+      - "logical tenant separation"
+      - "per-tenant context enforced on every request"
+      - "least privilege and role-based provisioning"
+      - "single sign-on and multi-factor authentication for staff"
+      - "approval workflows and audit trails for access"
+      - "support access only with customer consent"
+      - "periodic access reviews and prompt revocation"
+      - "unauthorized access treated as a security incident"
+      - "AI features never widen user permissions (optional)"
+  - name: "AI feature data processing"
+    description: "Explains, for AI-powered features, how customer content flows through models, indexes and retrieval steps to produce a response."
+    content_points:
+      - "mix of model providers"
+      - "searchable index of customer content"
+      - "embeddings and how they are stored"
+      - "step-by-step response generation"
+      - "permissions honored throughout"
+  - name: "Customer data use and model training"
+    description: "Sets out what the provider may and may not do with customer data, including ownership of inputs and outputs and whether data is used to train AI models."
+    content_points:
+      - "customer owns its data"
+      - "no advertising use or sale of customer data"
+      - "no model training on business data by default"
+      - "opt-in programs for model improvement"
+      - "no-training obligations flowed down to model providers"
+      - "ownership of AI inputs and outputs"
+      - "acceptable use rules and enforcement (optional)"
+  - name: "Data retention and deletion"
+    description: "Describes how long customer data is kept, the controls customers have over retention, and how data and storage media are disposed of."
+    content_points:
+      - "customer-configurable retention settings"
+      - "zero data retention options"
+      - "deletion on customer request or account closure"
+      - "restore window before permanent deletion"
+      - "deletion of derived data such as indexes or embeddings (optional)"
+      - "backup retention period"
+      - "secure media sanitization and destruction"
+  - name: "Vulnerability management and security testing"
+    description: "Explains how vulnerabilities are found, prioritized and fixed, and how controls are tested internally and by independent parties."
+    content_points:
+      - "continuous infrastructure and container scanning"
+      - "internal penetration testing"
+      - "independent third-party penetration tests"
+      - "red team exercises"
+      - "bug bounty program"
+      - "severity-based remediation timeframes"
+      - "public security advisories and bulletins"
+      - "customer-initiated assessments (optional)"
+  - name: "Incident response"
+    description: "Describes how security incidents are detected, triaged, contained and resolved, and how affected customers are told."
+    content_points:
+      - "definition of a security incident"
+      - "documented playbooks and runbooks"
+      - "dedicated detection and response team"
+      - "severity triage and escalation"
+      - "customer notification for confirmed incidents"
+      - "post-incident review"
+      - "regular testing of response plans"
+  - name: "Business continuity and availability"
+    description: "Covers how the service stays available and recovers from disruptions, including redundancy, backups and disaster recovery testing."
+    content_points:
+      - "redundancy across zones and regions"
+      - "geographically distributed facilities"
+      - "disaster recovery testing"
+      - "business impact assessments"
+      - "encrypted backups and point-in-time recovery"
+      - "limits on restoring customer-caused deletions"
+      - "public service status reporting"
+      - "regional service availability limits (optional)"
+  - name: "Third-party suppliers and subprocessors"
+    description: "Explains how the provider vets and oversees vendors and subprocessors, including any outside AI model or inference providers, that may handle customer data."
+    content_points:
+      - "risk-based supplier assessment"
+      - "contractual security and confidentiality requirements"
+      - "ongoing supplier reviews"
+      - "public subprocessor list"
+      - "AI model and inference providers (optional)"
+      - "supplier code of conduct (optional)"
+  - name: "Compliance, certifications and audits"
+    description: "Lists the security frameworks the provider aligns with, the certifications and attestation reports it holds, and how its controls are independently verified."
+    content_points:
+      - "information security management system"
+      - "policy and risk management programs"
+      - "ISO/IEC 27001 family certifications"
+      - "SOC 2 and SOC 3 reports"
+      - "government and sector-specific frameworks"
+      - "certification scope covering AI features"
+      - "internal and external audits"
+      - "audit reports available to customers"
+      - "data residency for regional requirements (optional)"
+      - "cyber and privacy insurance (optional)"
+  - name: "Privacy and data protection"
+    description: "Describes the privacy program and the tools and agreements that help customers meet data-protection laws."
+    content_points:
+      - "dedicated privacy team and reviews"
+      - "support for major privacy laws"
+      - "data processing addendum"
+      - "data transfer impact assessments"
+      - "tools for data subject requests"
+      - "subprocessor change notifications"
+      - "health-data agreements (optional)"
+  - name: "Shared responsibility and customer security controls"
+    description: "Explains which security duties sit with the provider and which with the customer, and the administrative controls customers can use to secure their own accounts."
+    content_points:
+      - "provider versus customer responsibilities"
+      - "responsibility split by service model"
+      - "single sign-on and multi-factor authentication"
+      - "automated user provisioning"
+      - "custom roles and permissions"
+      - "domain verification and central account management"
+      - "audit logs and admin APIs"
+      - "usage analytics and spend controls (optional)"
+      - "additional security services for customers (optional)"
+  - name: "Conclusion and contact"
+    description: "Closes the document by restating the commitment to protecting customer data and telling readers how to raise questions."
+    content_points:
+      - "restated security commitment"
+      - "how to contact the security team"
+      - "informational, non-binding disclaimer"
+optional_topics:
+  - name: "Summary of key commitments"
+    description: "A short list of headline security and privacy promises placed before the detailed sections."
+    content_points:
+      - "headline data-protection promises"
+      - "no-training commitment"
+      - "certification highlights"
+  - name: "Government and law enforcement requests"
+    description: "Describes how the provider handles requests from authorities for customer data and how it reports on them."
+    content_points:
+      - "customer as primary responder"
+      - "legal review of each request"
+      - "customer notification where lawful"
+      - "transparency reporting"
+  - name: "Third-party app ecosystem security"
+    description: "For platforms with an app marketplace, describes the security requirements and assurance programs applied to partner-built apps."
+    content_points:
+      - "minimum security requirements for apps"
+      - "partner bug bounty and penetration testing"
+      - "automated security scanning of apps"
+      - "partner vulnerability remediation timelines"
+      - "partner identity verification"
+      - "privacy and security disclosures for each app"
+  - name: "Frequently asked questions"
+    description: "A closing set of short questions and answers that restate the main security points in plain language."
+    content_points:
+      - "overall security posture"
+      - "encryption standards used"
+      - "most important security features"
+      - "admin control over settings"
+      - "who is responsible for security"
+tone_and_conventions: >-
+  Write in the provider's own voice using first-person plural ("we", "our")
+  and address the customer directly as "you" and "your organization". The
+  register is professional and reassuring, plain rather than legalistic,
+  confident but careful: describe practices and commitments factually, avoid
+  absolute guarantees, and use hedged phrasing such as "designed to",
+  "helps ensure" or "where legally permitted". Open each section with a sentence
+  or two on why the control area matters, then explain what the provider does,
+  then, where useful, what the customer can do. Name the security concept
+  first and the mechanism second, and spell out acronyms on first use
+  (multi-factor authentication (MFA), single sign-on (SSO)). Use
+  industry-standard terms and recognized standards by their generic names
+  (TLS, AES-256, ISO/IEC 27001, SOC 2, privacy-law names), and use
+  "customer data", "inputs" and "outputs" consistently; a capitalized defined
+  term such as "Customer Data" may be used when it mirrors the companion
+  agreements. Mostly prose paragraphs, with bulleted lists for sets of
+  controls, tools or requirements; list items often start with a short bold
+  label followed by one or two explanatory sentences. Numbered lists only for
+  real sequences such as a response or processing flow. Tables are rare and
+  used for side-by-side summaries such as standards with a short description.
+  No ALL CAPS beyond acronyms, and no contractual boilerplate. Qualify
+  statements by plan or eligibility where controls differ ("for eligible
+  enterprise customers"). Cross-reference other parts of the document by
+  topic ("as described in the incident response section") and refer to
+  binding terms only as companion documents (customer agreement, data
+  processing addendum, subprocessor list, service-specific terms). The
+  document may carry a "last updated" note and a closing statement that it is
+  informational, reflects practices at the time of writing, may change, and is
+  not a binding commitment.
+typical_length:
+  section_words: [66, 170]
+sources:
+  - "https://www.atlassian.com/trust/security/security-practices"
+  - "https://openai.com/business-data/"
+  - "https://slack.com/resources/why-use-slack/security-at-slack"
+  - "https://www.notion.com/help/notion-ai-security-practices"
+  - "https://docs.cloud.google.com/docs/security/overview/whitepaper"
