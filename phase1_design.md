@@ -149,13 +149,18 @@ generate_document(cfg, prompts, tool_id, tool, doc_type, guide, run_id) -> DocFl
 
 ## 4. Functions
 
-Shared types: `Tool {name, purpose, category, typical_user_base}`; `TocNode {id, number, level, title, description, children, is_leaf}`; `SectionResult {html, issues_applied: [{issue_type, description, conflicts_with?}]}`; `Verdict {planted: [{section_id, issue_type, present, evidence}], unintended: [{section_id, issue_type, description}]}`; `Usage {model, provider, prompt_tokens, completion_tokens, reasoning_tokens, cost_usd}`; `Ledger {path, run_id}`.
+Shared types (in `phase1/datatypes.py`, D46): `Tool {name, purpose, category, typical_user_base}`; `TocNode {id, number, level, title, description, children, is_leaf}`; `SectionResult {html, issues_applied: [{issue_type, description, conflicts_with?}]}`; `Verdict {planted: [{section_id, issue_type, present, evidence}], unintended: [{section_id, issue_type, description}]}`; `Usage {model, provider, prompt_tokens, completion_tokens, reasoning_tokens, cost_usd}`; `Ledger {path, run_id}`; `StyleGuide {document_type, purpose, scope, core_topics, optional_topics, tone_and_conventions, section_words}`; `PromptTemplate {system, user}` (D49).
 
 ### Setup
 
 **`load_config(path) -> Config`**: load `config.yaml` and check required keys and value ranges.
 ```
-read YAML; check every key in §6 exists
+read YAML
+build Config from nested frozen dataclasses (D47): Paths, Api, ModelConfig, Models, Temperature,
+    Generation, TocLimits, Validation, Retry      # one field per key in §6
+paths become Path objects relative to the config file's folder (D51)
+a missing key fails with its full path, e.g. "missing config key: retry.repair_rounds"
+an unknown key fails the same way, e.g. "unknown config key: toc.max_dpeth" (D50)
 check docs_per_tool <= len(doc_types); issues_per_doc[1] <= len(issue_types)
 check min(leaf_range) >= issues_per_doc[1] + 1          # room for one issue per leaf + an earlier leaf for contradiction
 return Config
@@ -164,14 +169,27 @@ return Config
 **`load_style_guides(guides_dir, doc_types) -> dict[str, StyleGuide]`**: load one YAML guide per configured type.
 ```
 for t in doc_types: read guides_dir/f"{t}.yaml"; check required fields (§5); store
-fail if any guide is missing
+fail if any guide is missing, or its document_type differs from t (D50)
 ```
 
 **`load_prompts(prompts_dir) -> dict[str, PromptTemplate]`**: load one prompt file per step.
 ```
 for step in [tool_ideation, toc, section, repair, judge]: read prompts_dir/f"{step}.yaml" -> {system, user}
-check every template has its required placeholders
+check every template has its required placeholders      # string.Template(text).get_identifiers()
 ```
+Required placeholders (D48). Steps rendered as one `{system, user}` pair accept each name in either template; `section` and `repair` are checked per template.
+
+| Step | Template | Placeholders |
+|---|---|---|
+| `tool_ideation` | either | `num_tools` |
+| `toc` | either | `tool_json`, `doc_type`, `purpose`, `scope`, `core_topics`, `optional_topics`, `tone_and_conventions`, `max_depth`, `leaf_range` |
+| `section` | system | `tool_json`, `doc_type`, `tone_and_conventions`, `toc_outline`, `sections_so_far` |
+| `section` | user | `number`, `title`, `description`, `section_words`, `html_contract`, `issue_instruction` |
+| `repair` | system | `tool_json`, `doc_type`, `tone_and_conventions`, `full_document` |
+| `repair` | user | `number`, `title`, `description`, `section_words`, `html_contract`, `issue_instruction`, `fix_list` |
+| `judge` | either | `tool_json`, `doc_type`, `html`, `planted`, `issue_type_definitions` |
+
+Placeholders use `string.Template` syntax, `$name` (D45); a literal `$` is written `$$`. `render(template, values)` calls `Template.substitute`, so a missing value raises instead of leaving a gap.
 
 ### LLM access
 
@@ -388,10 +406,16 @@ print per-file PASS/FAIL with reasons
 config.yaml
 config.smoke.yaml                   # smoke run: 2 tools × 2 documents (§10)
 smoke/                              # smoke run outputs: data/, .cache/, logs/ (not committed)
+generate.py                         # entry point: python generate.py config.yaml
+validate.py                         # standalone validator: python validate.py data/
+phase1/                             # config, llm, ideation, planning, toc, sections, assembly,
+                                    # judge, outputs (.py, one per §4 group) + datatypes.py (D46)
+tests/                              # test_*.py, conftest.py (shared fixtures such as the fake LLM)
+tests/fixtures/                     # fixture TOCs, sections, data folder
 tests/fixtures/responses/           # recorded probe responses (D44)
 style_guides/
   privacy_policy.yaml, terms_of_service.yaml, data_processing_agreement.yaml,
-  service_level_agreement.yaml, security_whitepaper.yaml, compliance_certifications.yaml
+  service_level_agreement.yaml, security_whitepaper.yaml, compliance_and_certifications.yaml
 prompts/
   tool_ideation.yaml, toc.yaml, section.yaml, repair.yaml, judge.yaml   # each: {system, user}
 data/
@@ -562,6 +586,13 @@ typical_length:
 | D42 | Testing in four levels (§10): pytest with a fake LLM, one probe per model, a paid smoke run, the full run; no runs on free models | Try the pipeline on free models first; real calls only | Fakes test the code for free and can force rare cases (402, three failed attempts, a stop mid-document) that a real model can't produce on demand. Free Gemma has no strict JSON, so a free run couldn't run the section step as designed and would test different models than the real run. A paid smoke run costs cents. |
 | D43 | Committed `config.smoke.yaml`: 2 tools × 2 documents, outputs under `smoke/` | Temporary local copy; CLI overrides | Reviewers can reproduce it; no CLI overrides needed (D37); smoke output never mixes with the real dataset or its `tool.json` files. |
 | D44 | Raw probe responses saved as fixtures in `tests/fixtures/responses/` | Keep probe output uncommitted | `call_llm` parsing (content, usage, provider) is tested against the real OpenRouter response format without new calls. |
+| D45 | Prompt placeholders use `string.Template` (`$name`) | `str.format` (`{name}`); Jinja2 | JSON examples in prompts need no brace escaping; `get_identifiers()` makes the placeholder check one line; standard library, no template logic in prompts. |
+| D46 | Code in a `phase1/` package, one module per §4 group; shared types in `phase1/datatypes.py`; pytest layout `tests/test_*.py`, `tests/conftest.py`, `tests/fixtures/` | Flat modules at the root; types defined in the module that creates them | Phases 2–5 get their own packages without mixing; one types module avoids import cycles between `outputs.py`, `validate.py` and the generators; the test names follow pytest conventions. |
+| D47 | `Config` built from nested frozen dataclasses | Recursive `SimpleNamespace` wrapper; plain dicts | The dataclass fields are the required-keys list, so structure and check live in one place; types and editor autocomplete; `frozen` prevents accidental changes at runtime. |
+| D48 | Required placeholder names per prompt step as in §4 Setup; single-render steps checked over system + user together, `section`/`repair` per template | Leave shared-text placeholders out until Q4; one combined check for every step | Names follow the `render(...)` arguments in §4; `section`/`repair` render system and user separately, so a placeholder in the wrong template would never be filled. |
+| D49 | `StyleGuide` and `PromptTemplate` as frozen dataclasses in `phase1/datatypes.py` | Dataclasses in `config.py`; plain dicts | Used by generators in several modules; same shared-types module as D46. |
+| D50 | `load_config` rejects unknown keys; each style guide's `document_type` must match its file name | Only missing keys and the three range checks | A typo'd key would otherwise be ignored silently and the default never applied; a copied guide with the wrong type is caught before any call. |
+| D51 | Relative paths in the config resolve against the config file's folder | Current working directory | Runs and tests work from any working directory. |
 
 ## 9. Open questions
 
@@ -630,4 +661,7 @@ Models, prompts, guides and limits are the same as in the full run; any change t
   - **Config:** `api.require_parameters`, `api.allow_fallbacks` and `models.*.providers` added.
   - **Failure handling:** out of credits (402) replaces daily-limit detection (D31, D32).
   - **Open questions:** §9.1, 9.4 and 9.5 resolved; 9.2 now asks about DeepSeek; 9.7 added.
+- **Style guide name (2026-11-05):** §5 uses `compliance_and_certifications.yaml`, matching the guide file, its `document_type` and `generation.doc_types`.
+- **Code conventions (2026-11-05):** decisions D45 (`string.Template` placeholders, with `render` defined in §4 Setup), D46 (package, shared types module and test layout, added to §5) and D47 (`Config` as nested frozen dataclasses, in `load_config`).
+- **Config loading (2026-11-05):** decisions D48 (required placeholder names, table in §4 Setup), D49 (`StyleGuide`, `PromptTemplate` in `datatypes.py`), D50 (unknown config keys and wrong guide `document_type` rejected) and D51 (paths relative to the config file).
 - **Testing (2026-11-04):** added §10 with four test levels, and decisions D42 (no free-model runs), D43 (committed `config.smoke.yaml`) and D44 (probe responses as fixtures). §5 lists `config.smoke.yaml`, `smoke/` and `tests/fixtures/responses/`.

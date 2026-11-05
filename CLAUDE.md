@@ -12,12 +12,28 @@ A 5-phase RAG system that helps software whitelisting teams check AI tools' lega
 4. **Agentic RAG:** Phase 2 chatbot + retrieval tool, quoted citations, summarization at 60–70% of the context limit
 5. **Evaluation:** golden dataset + DeepEval/TruLens metrics across configurations
 
-Current state: Phase 1 is designed (`phase1_design.md`) and planned (`IMPLEMENTATION_PLAN.md`). The bootstrap (layout, config, requirements, style guides) exists; no feature code yet. Next is F1 `feat/config-loading`.
+## Current state (2026-11-05)
+
+Phase 1 design and planning are finished and the local environment is ready. No feature code exists yet: `phase1/` holds only `__init__.py`, and `prompts/` and `tests/` are empty.
+
+Done:
+- **Bootstrap** (`201ebf8`, `a1b0c16`): `.gitignore`, `.env.example`, pinned `requirements.txt`, folder layout (`phase1/`, `prompts/`, `data/`, `tests/`), `config.yaml`, six style guides, generator prompts, README setup.
+- **Plan:** `IMPLEMENTATION_PLAN.md` with features F1–F13 (branches, steps, tests, done criteria) and open questions.
+- **Paid models** (`3bc2694`): DeepSeek V4.1 Flash for ideation, TOC and judge; Gemma 4 31B for sections. Also fixed provider routing, 402 as a clean stop, and a per-document usage ledger (D1–D3, D30–D32, D39–D41).
+- **Testing** (`84e6b5d`): design §10 with four levels (unit tests with a fake LLM, model probe, smoke run, full run), committed `config.smoke.yaml`, probe responses kept as fixtures (D42–D44).
+- **Code conventions:** D45 (`string.Template` placeholders, `$name`), D46 (`phase1/` package, shared types in `phase1/datatypes.py`, pytest layout), D47 (`Config` as nested frozen dataclasses). The compliance guide name is fixed to `compliance_and_certifications` everywhere. Plan Q3, Q7 and Q14 are resolved.
+- **Environment:** Python 3.11.18 in `.venv`, all pinned packages installed, `.env` created.
+
+Next steps:
+1. Start F1 `feat/config-loading`. The user creates the branch: `git checkout main && git pull && git checkout -b feat/config-loading`. Then implement F1 step 1 (`Config` dataclasses + `load_config` with the required-keys check, design D47) as in `IMPLEMENTATION_PLAN.md` §4, followed by steps 2–4. Then F2–F6, which make no API calls.
+2. Before F6: answer Q5 (where `validate.py` gets `max_depth`).
+3. Before F7: buy OpenRouter credits, put the key in `.env`, and answer Q2 (how `call_llm` and `with_attempts` get the `api`/`retry` config).
+4. Before F10: answer Q4 (where shared prompt text lives).
 
 ## Key documents
 
 - `rag_htec_project_specification.md`: the assignment (source of truth for requirements)
-- `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D41), open questions
+- `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D47), open questions, testing (§10)
 - `IMPLEMENTATION_PLAN.md`: bootstrap commits, feature branches F1–F13 with steps and done criteria, open questions
 - `Yaml_file_generator_prompt.md`: prompt for building `style_guides/*.yaml` from real public documents
 - `YAML_generator_compliance_and_certifications.md`: variant of that prompt for Compliance & Certifications
