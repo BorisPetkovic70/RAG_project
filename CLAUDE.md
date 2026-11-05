@@ -14,7 +14,7 @@ A 5-phase RAG system that helps software whitelisting teams check AI tools' lega
 
 ## Current state (2026-11-05)
 
-Phase 1 design and planning are finished and the local environment is ready. No feature code exists yet: `phase1/` holds only `__init__.py`, and `prompts/` and `tests/` are empty.
+Phase 1 design and planning are finished. F1 (config loading) is merged into `main`. F2 (planning) is implemented on `feat/planning` and waiting for the user's commit and PR. F3–F13 are not started. `prompts/` is still empty.
 
 Done:
 - **Bootstrap** (`201ebf8`, `a1b0c16`): `.gitignore`, `.env.example`, pinned `requirements.txt`, folder layout (`phase1/`, `prompts/`, `data/`, `tests/`), `config.yaml`, six style guides, generator prompts, README setup.
@@ -23,20 +23,25 @@ Done:
 - **Testing** (`84e6b5d`): design §10 with four levels (unit tests with a fake LLM, model probe, smoke run, full run), committed `config.smoke.yaml`, probe responses kept as fixtures (D42–D44).
 - **Code conventions:** D45 (`string.Template` placeholders, `$name`), D46 (`phase1/` package, shared types in `phase1/datatypes.py`, pytest layout), D47 (`Config` as nested frozen dataclasses). The compliance guide name is fixed to `compliance_and_certifications` everywhere. Plan Q3, Q7 and Q14 are resolved.
 - **Environment:** Python 3.11.18 in `.venv`, all pinned packages installed, `.env` created.
+- **F1 config loading** (PR #1 `4391b0c`, PR #2 `1757a81`, merged as `ee37a41`): `phase1/config.py` has `load_config`, `load_style_guides`, `load_prompts` and `render`; `phase1/datatypes.py` has `StyleGuide` and `PromptTemplate`. Decisions D48 (required prompt placeholders), D49 (these types in `datatypes.py`), D50 (unknown config keys and a guide `document_type` that doesn't match its file are rejected), D51 (paths relative to the config file). `tests/test_config.py` follows the `writing-unit-tests` skill (37 tests, green).
+- **F2 planning** (branch `feat/planning`, not yet committed; all three plan steps go in one commit): `phase1/planning.py` has `doc_rng` (sha256 of `seed:tool_id:doc_type`, stable across processes), `select_doc_types` (per-type quotas, tools take the types with the most quota left, ties shuffled; returns `{"tool1": [...]}`) and `assign_issues` (contradiction placed first, never on the first leaf; reads only `leaf.id`). `tests/test_planning.py` uses `SimpleNamespace(id=...)` leaves until `TocNode` exists, loads both real configs, loops over 500 seeds, and covers each config limit at its value (one past is in `test_config::test_value_range_limits`). 55 tests, green.
 
 Next steps:
-1. Start F1 `feat/config-loading`. The user creates the branch: `git checkout main && git pull && git checkout -b feat/config-loading`. Then implement F1 step 1 (`Config` dataclasses + `load_config` with the required-keys check, design D47) as in `IMPLEMENTATION_PLAN.md` §4, followed by steps 2–4. Then F2–F6, which make no API calls.
-2. Before F6: answer Q5 (where `validate.py` gets `max_depth`).
-3. Before F7: buy OpenRouter credits, put the key in `.env`, and answer Q2 (how `call_llm` and `with_attempts` get the `api`/`retry` config).
-4. Before F10: answer Q4 (where shared prompt text lives).
+1. Finish F2: the user commits `phase1/planning.py` and `tests/test_planning.py`, opens the PR and merges it. Open point: the design's "check all quotas == 0" in `select_doc_types` is left out of the code because it can never fail when `docs_per_tool <= len(doc_types)`; decide whether to drop it from `phase1_design.md` or add it as an `assert`.
+2. Start F3 `feat/toc-tree` (depends only on F1; branch from `main` after F2 is merged): `git checkout main && git pull && git checkout -b feat/toc-tree`. Implement `TocNode`, `build_toc_tree`, `flatten_tree`, `validate_toc`, `save_toc`/`load_toc` as in `IMPLEMENTATION_PLAN.md` F3. Then F4–F6, which make no API calls.
+3. Before F6: answer Q5 (where `validate.py` gets `max_depth`).
+4. Before F7: buy OpenRouter credits, put the key in `.env`, and answer Q2 (how `call_llm` and `with_attempts` get the `api`/`retry` config).
+5. In F8: decide how `render` turns a whole `{system, user}` pair into messages (design §4 calls `render(prompts.toc, ...)`); F1's `render` fills one template string.
+6. Before F10: answer Q4 (where shared prompt text lives). Once the real `prompts/*.yaml` exist, add a test that loads them with `load_prompts`.
 
 ## Key documents
 
 - `rag_htec_project_specification.md`: the assignment (source of truth for requirements)
-- `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D47), open questions, testing (§10)
+- `phase1_design.md`: Phase 1 flow, functions, config keys, numbered decisions (D1–D51), open questions, testing (§10)
 - `IMPLEMENTATION_PLAN.md`: bootstrap commits, feature branches F1–F13 with steps and done criteria, open questions
 - `Yaml_file_generator_prompt.md`: prompt for building `style_guides/*.yaml` from real public documents
 - `YAML_generator_compliance_and_certifications.md`: variant of that prompt for Compliance & Certifications
+- `.claude/skills/writing-unit-tests/SKILL.md`: rules for every test file (layout, naming, mocking, required coverage)
 
 When a design decision changes, update `phase1_design.md` (Decisions table and Changelog) together with the code.
 
