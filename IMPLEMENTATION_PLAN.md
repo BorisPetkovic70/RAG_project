@@ -319,8 +319,10 @@ still merge in the listed order.
 git checkout main && git pull && git checkout -b feat/config-loading
 ```
 
-**Step 1: required keys.** `phase1/config.py`: `load_config(path)` reads YAML, checks every
-§6 key path, and returns `Config` with attribute access as used in §3.
+**Step 1: required keys.** `phase1/config.py`: the nested frozen dataclasses (`Config`,
+`Paths`, `Api`, `ModelConfig`, `Models`, `Temperature`, `Generation`, `TocLimits`,
+`Validation`, `Retry`; design D47) and `load_config(path)`, which reads YAML, builds `Config`,
+and fails with the full path of any missing key.
 `tests/test_config.py`: the real `config.yaml` loads; a copy without `retry.repair_rounds`
 fails naming that key.
 ```
@@ -349,10 +351,10 @@ git commit -m "feat(config): Load style guides per document type" -m "Load one g
 or one of its required fields is missing."
 ```
 
-**Step 4: prompt templates** (needs the Q7 placeholder syntax).
-`load_prompts(prompts_dir)` loads `{system, user}` for `tool_ideation, toc, section, repair,
-judge` and checks the required placeholders, which are derived from the §4 `render(...)`
-calls. Tests use templates written to `tmp_path`: complete, missing file, missing
+**Step 4: prompt templates.** `load_prompts(prompts_dir)` loads `{system, user}` for
+`tool_ideation, toc, section, repair, judge` and checks the required `$name` placeholders
+with `string.Template.get_identifiers()` (design D45). The required names are derived from
+the §4 `render(...)` calls. `render(template, values)` uses `Template.substitute`. Tests use templates written to `tmp_path`: complete, missing file, missing
 placeholder.
 ```
 git add phase1/config.py tests/test_config.py
@@ -414,11 +416,11 @@ Every requirement is covered.
 **Blocking**
 1. **Model IDs (§9.1).** *Resolved:* paid `deepseek/deepseek-v4.1-flash-1017` (ideation, TOC, judge) and `google/gemma-4-31b-it` (sections), each with a provider order (design D1–D3, D30, D39). The free Gemma endpoint has no strict structured outputs. The F7 probe confirms strict schema and seed in practice.
 2. **Config inside `call_llm` / `with_attempts`.** The §4 signatures take no `cfg`, but they use `api.base_url`, `api.timeout_s`, `api.api_key_env`, `retry.backoff_base_s`, `retry.max_total_wait_s` and `retry.max_attempts`. How should these reach them? Blocks F7.
-3. **Compliance slug.** §5 lists `compliance_certifications.yaml`, but the guide in the repo is `compliance_and_certifications.yaml` (same `document_type`). The plan uses `compliance_and_certifications`; you'd update the §5 text. OK?
+3. **Compliance slug.** *Resolved:* `compliance_and_certifications` everywhere (guide file, `document_type`, config, design §5).
 4. **Shared prompt text.** Where do the `issue_instruction` text per issue type, the HTML contract text and `issue_type_definitions` live? §4 says each prompt file is `{system, user}`. Blocks F10–F12, not the order.
 5. **`validate.py` limits.** `validate_data_dir(data_dir)` checks `depth <= max_depth`, but it gets no config. Should it read `config.yaml`? Blocks F6.
 6. **Daily-limit error format (§9.5).** *Resolved:* not needed. Paid models have no daily cap; out of credits is HTTP 402 → `BudgetExhausted` (D32).
-7. **Placeholder syntax.** The prompts contain JSON examples, so `str.format` needs doubled braces. The alternatives are `string.Template` (`$name`, stdlib) or Jinja2 (a new dependency). Blocks F1 step 4.
+7. **Placeholder syntax.** *Resolved:* `string.Template` with `$name` placeholders (design D45).
 
 **Non-blocking (affect content, not order)**
 8. **Temperature with reasoning (§9.2).** If the F7 probe shows DeepSeek ignores `temperature` with reasoning on, do you want to revisit D6?
@@ -427,7 +429,7 @@ Every requirement is covered.
 11. **Commit `style_guides/sources/`?** *Resolved:* no, it's ignored in B1.
 12. **Unused guide fields.** `certification_profile` and `certification_catalog` (compliance guide) and `sources` (all guides) aren't rendered by `generate_toc` per §4, so they're ignored. Intended?
 13. **Python version.** *Resolved:* keep 3.11+. Install Python 3.11 before creating the venv (the machine has 3.10.12).
-14. **Names not in the design.** Package `phase1/`, `phase1/datatypes.py`, `tests/`, `tests/conftest.py`. OK? (`config.smoke.yaml`, `smoke/` and `tests/fixtures/responses/` are now in design §5/§10.)
+14. **Names not in the design.** *Resolved:* `phase1/` package, `phase1/datatypes.py`, `tests/test_*.py`, `tests/conftest.py`, `tests/fixtures/` are now in design §5 (D46). `Config` is built from nested frozen dataclasses (D47).
 15. **Allowed-tag list.** Should the §5 section HTML contract be a constant in `sections.py` or a config key?
 16. **Dataset commit.** When do the generated `data/` files get committed? Proposed: one `chore(data): Add generated Phase 1 dataset` commit after F13's full run.
 17. **Bootstrap without a PR.** Bootstrap commits go straight to `main` while features use PRs. OK?
