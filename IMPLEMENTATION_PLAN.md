@@ -132,6 +132,7 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 - **Local test (no API):** the real `config.yaml`, `config.smoke.yaml` and `style_guides/`, plus broken copies in `tmp_path`, plus prompt files written in `tmp_path`.
 - **Real API:** none.
 - **Done:** both real configs and all 6 guides load; every missing key, bad range, missing guide, missing guide field and missing placeholder gives an error that names it; pytest is green.
+- **Status:** done, merged as PR #1 and #2 (design D48–D51). Steps 1–4 were committed together, with the test rewrite as a separate commit.
 
 ### F2 `feat/planning`
 - **From:** `main` after F1 · **Depends on:** F1 (tests build a cfg from it)
@@ -145,6 +146,7 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 - **Local test:** pure functions. For 5×4 over 6 types the quotas are 3/3/3/3/4/4 and each tool gets 4 distinct types. Same seed gives the same output. `doc_rng` doesn't depend on call order. The planted issue count stays within `issues_per_doc` with distinct types and at most one per leaf. A contradiction never lands on the first leaf (checked over many seeds).
 - **Real API:** none.
 - **Done:** all of the above pass for many seeds.
+- **Status:** implemented on `feat/planning`, waiting for commit and PR. The three steps go in one commit. `assign_issues` reads only `leaf.id`; tests use `SimpleNamespace(id=...)` leaves until F3 adds `TocNode`. The design's final quota check is not in the code (it can never fail when `docs_per_tool <= len(doc_types)`); the tests check exact quotas over 500 seeds instead. Open: drop that line from the design or add an `assert`.
 
 ### F3 `feat/toc-tree`
 - **From:** `main` after F1 · **Depends on:** F1
