@@ -1,0 +1,21 @@
+[
+  {"id": "intro", "parent_id": null, "title": "Introduction", "description": "Who we are and what this policy covers."},
+  {"id": "collect", "parent_id": null, "title": "Information We Collect", "description": "Categories of personal data the service collects."},
+  {"id": "provided", "parent_id": "collect", "title": "Information You Provide", "description": "Data users enter directly into the service."},
+  {"id": "account", "parent_id": "provided", "title": "Account Information", "description": "Name, email and organisation details at sign-up."},
+  {"id": "payment", "parent_id": "provided", "title": "Payment Information", "description": "Data needed to bill paid plans."},
+  {"id": "card", "parent_id": "payment", "title": "Card Data", "description": "How card details are handled by the payment processor."},
+  {"id": "billing", "parent_id": "payment", "title": "Billing Address", "description": "Address data kept for invoices and tax."},
+  {"id": "auto", "parent_id": "collect", "title": "Automatically Collected Information", "description": "Usage logs, device data and cookies."},
+  {"id": "use", "parent_id": null, "title": "How We Use Information", "description": "Purposes and legal bases for processing."},
+  {"id": "delivery", "parent_id": "use", "title": "Providing the Service", "description": "Processing needed to run the product."},
+  {"id": "improve", "parent_id": "use", "title": "Model Improvement", "description": "Whether customer content trains models, and opt-outs."},
+  {"id": "sharing", "parent_id": null, "title": "Sharing of Information", "description": "When and with whom personal data is shared."},
+  {"id": "subprocessors", "parent_id": "sharing", "title": "Subprocessors", "description": "Third parties that process data on our behalf."},
+  {"id": "legal", "parent_id": "sharing", "title": "Legal Requests", "description": "Disclosures required by law enforcement or courts."},
+  {"id": "retention", "parent_id": null, "title": "Data Retention", "description": "How long each category of data is kept."},
+  {"id": "rights", "parent_id": null, "title": "Your Rights", "description": "Rights users have over their personal data."},
+  {"id": "access", "parent_id": "rights", "title": "Access and Portability", "description": "Requesting a copy of personal data."},
+  {"id": "deletion", "parent_id": "rights", "title": "Deletion", "description": "Requesting erasure and its limits."},
+  {"id": "contact", "parent_id": null, "title": "Contact Us", "description": "How to reach the privacy team."}
+]

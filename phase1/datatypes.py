@@ -18,3 +18,14 @@ class StyleGuide:
 class PromptTemplate:
     system: str
     user: str
+
+
+@dataclass(frozen=True)
+class TocNode:
+    id: str
+    number: str
+    level: int
+    title: str
+    description: str
+    children: tuple["TocNode", ...]
+    is_leaf: bool

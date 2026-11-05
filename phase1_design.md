@@ -593,6 +593,7 @@ typical_length:
 | D49 | `StyleGuide` and `PromptTemplate` as frozen dataclasses in `phase1/datatypes.py` | Dataclasses in `config.py`; plain dicts | Used by generators in several modules; same shared-types module as D46. |
 | D50 | `load_config` rejects unknown keys; each style guide's `document_type` must match its file name | Only missing keys and the three range checks | A typo'd key would otherwise be ignored silently and the default never applied; a copied guide with the wrong type is caught before any call. |
 | D51 | Relative paths in the config resolve against the config file's folder | Current working directory | Runs and tests work from any working directory. |
+| D52 | `TocNode` is a frozen dataclass with `children` as a tuple; `is_leaf` is not written to `toc_*.json` and `load_toc` derives it from `children`; the LLM's entry ids only link parents and children, and `build_toc_tree` replaces them with position ids (`s1-1-2`) | Store `is_leaf` on disk; keep the LLM ids | Matches the other shared types (D47, D49); the file keeps exactly the §5 fields, and a stored `is_leaf` could disagree with `children`; position ids are stable and readable whatever ids the model invents. |
 
 ## 9. Open questions
 
@@ -663,5 +664,6 @@ Models, prompts, guides and limits are the same as in the full run; any change t
   - **Open questions:** §9.1, 9.4 and 9.5 resolved; 9.2 now asks about DeepSeek; 9.7 added.
 - **Style guide name (2026-11-05):** §5 uses `compliance_and_certifications.yaml`, matching the guide file, its `document_type` and `generation.doc_types`.
 - **Code conventions (2026-11-05):** decisions D45 (`string.Template` placeholders, with `render` defined in §4 Setup), D46 (package, shared types module and test layout, added to §5) and D47 (`Config` as nested frozen dataclasses, in `load_config`).
+- **TOC tree (2026-11-05):** decision D52 (`TocNode` shape, `is_leaf` derived on load, position ids replace the LLM ids).
 - **Config loading (2026-11-05):** decisions D48 (required placeholder names, table in §4 Setup), D49 (`StyleGuide`, `PromptTemplate` in `datatypes.py`), D50 (unknown config keys and wrong guide `document_type` rejected) and D51 (paths relative to the config file).
 - **Testing (2026-11-04):** added §10 with four test levels, and decisions D42 (no free-model runs), D43 (committed `config.smoke.yaml`) and D44 (probe responses as fixtures). §5 lists `config.smoke.yaml`, `smoke/` and `tests/fixtures/responses/`.

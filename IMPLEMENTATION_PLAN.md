@@ -146,7 +146,7 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 - **Local test:** pure functions. For 5×4 over 6 types the quotas are 3/3/3/3/4/4 and each tool gets 4 distinct types. Same seed gives the same output. `doc_rng` doesn't depend on call order. The planted issue count stays within `issues_per_doc` with distinct types and at most one per leaf. A contradiction never lands on the first leaf (checked over many seeds).
 - **Real API:** none.
 - **Done:** all of the above pass for many seeds.
-- **Status:** implemented on `feat/planning`, waiting for commit and PR. The three steps go in one commit. `assign_issues` reads only `leaf.id`; tests use `SimpleNamespace(id=...)` leaves until F3 adds `TocNode`. The design's final quota check is not in the code (it can never fail when `docs_per_tool <= len(doc_types)`); the tests check exact quotas over 500 seeds instead. Open: drop that line from the design or add an `assert`.
+- **Status:** done, merged as PR #3. The three steps were committed together. `assign_issues` reads only `leaf.id`. The design's final quota check is not in the code (it can never fail when `docs_per_tool <= len(doc_types)`); the tests check exact quotas over 500 seeds instead. Open: drop that line from the design or add an `assert`.
 
 ### F3 `feat/toc-tree`
 - **From:** `main` after F1 · **Depends on:** F1
@@ -161,6 +161,7 @@ Each branch starts from an up-to-date `main` once its dependencies are merged:
 - **Local test:** fixture entries 3–4 levels deep. Broken variants: duplicate id, unknown parent, cycle, child before parent, depth 5, too few or too many leaves, empty title. Save/load round-trip keeps the same tree, and the file is a JSON object, not a string.
 - **Real API:** none.
 - **Done:** fixture round-trip passes; each broken variant is reported.
+- **Status:** implemented on `feat/toc-tree`, waiting for commit and PR (design D52). `save_toc` reads `tool.name`; tests pass a `SimpleNamespace(name=...)` until F4 adds `Tool`. `load_toc` does no structure checks; checking broken files on disk is F6's job.
 
 ### F4 `feat/html-checks`
 - **From:** `main` after F3 · **Depends on:** F1, F3
